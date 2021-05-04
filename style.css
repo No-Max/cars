@@ -1,0 +1,104 @@
+/* reset */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+/* page */
+.wrapper {
+  padding-top: 20px;
+  width: 900px;
+  margin: 0 auto;
+}
+.logo {
+  padding: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.filters {
+  padding-top: 20px;
+  display: flex;
+}
+
+.cards-container {
+  padding-top: 20px;
+}
+
+
+/* dropdown component */
+.component-dropdown-container {
+  position: relative;
+  margin: 5px;
+  border: 2px solid #ccc;
+  text-align: center;
+  border-radius: 3px;
+}
+.component-dropdown-container.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.component-dropdown-value {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.component-dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  display: none;
+  list-style: none;
+}
+.component-dropdown-container.active .component-dropdown-list {
+  display: block;
+}
+.component-dropdown-item {
+  padding: 5px;
+  cursor: pointer;
+  border-top: 1px solid #ccc;
+}
+.component-dropdown-item:hover {
+  background-color: #ccc;
+}
+
+/* card component */
+.component-card {
+  display: inline-block;
+  width: 30%;
+  padding: 15px 5px;
+}
+.component-img {
+  width: 100%;
+}
+.component-brand {
+  font-size: 22px;
+  font-weight: bold;
+}
+.component-model {
+  font-size: 19px;
+}
+.component-price {
+  font-weight: bold;
+  padding-top: 5px;
+}
+.component-descr {
+  padding-top: 10px;
+  font-size: 16px;
+}
+
+/* search button component */
+.component-search {
+  padding: 10px 20px;
+  border: 2px solid #ccc; 
+  margin: 5px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.component-search.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
