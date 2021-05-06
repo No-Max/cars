@@ -1,68 +1,9 @@
-const cars = [
-  {
-    id: 1,
-    brand: 'Audi',
-    model: 'A1',
-    img: 'audi-a1.jpeg',
-    price: 30000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-  {
-    id: 2,
-    brand: 'Audi',
-    model: 'A8',
-    img: 'audi-a8.jpeg',
-    price: 40000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-  {
-    id: 3,
-    brand: 'Audi',
-    model: 'Q7',
-    img: 'audi-q7.jpeg',
-    price: 60000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-  {
-    id: 4,
-    brand: 'BMW',
-    model: 'e60',
-    img: 'bmw-e60.jpg',
-    price: 50000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-  {
-    id: 5,
-    brand: 'BMW',
-    model: 'x5',
-    img: 'bmw-x5.jpg',
-    price: 40000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-  {
-    id: 6,
-    brand: 'Skoda',
-    model: 'Fabia',
-    img: 'skoda-fabia.jpeg',
-    price: 40000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-  {
-    id: 7,
-    brand: 'Skoda',
-    model: 'Octavia',
-    img: 'skoda-octavia.jpeg',
-    price: 30000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-];
-
 class Dropdown {
   _selectedValue;
   constructor(defaultValue, list, dependance = [null, null], listStatus = '') {
     this.defaultValue = defaultValue;
     this.listItems = list;
-    [ this._master, this._slave ] = dependance;
+    [this._master, this._slave] = dependance;
     if (this._master !== null) {
       this._master._slave = this;
     }
@@ -73,7 +14,7 @@ class Dropdown {
         const value = event.target.textContent;
         this.setSelectedValue = value;
         if (this._slave === null) {
-            filterButton.classList.remove('disabled');
+          filterButton.classList.remove('disabled');
         }
         else {
           if (this._slave.name === 'button') {
@@ -86,9 +27,8 @@ class Dropdown {
               if (e.brand === value) return e;
             }).map((e) => e.model));
           }
-          
         }
-       }
+      }
     });
   }
 
@@ -115,7 +55,7 @@ class Dropdown {
   get value() {
     return this._selectedValue;
   }
-  
+
   clear() {
     this.element.querySelector('.component-dropdown-value').textContent = this.defaultValue;
     const button = this.element.closest('.filters').querySelector('button').classList.add('disabled');
@@ -133,23 +73,28 @@ class Dropdown {
   }
 }
 
-const filters = document.querySelector('.filters');
-const brandDropdown = new Dropdown('Choose brand', (() => {
-  return Array.from(new Set(cars.map((e) =>  e.brand)));
-})());
+fetch('server-responce.txt')
+  .then(response => response.text())
+  .then(data => { cars = JSON.parse(data); })
+  .then(() => {
+    const filters = document.querySelector('.filters');
+    const brandDropdown = new Dropdown('Choose brand', (() => {
+      return Array.from(new Set(cars.map((e) => e.brand)));
+    })());
 
-const modelDropdown = new Dropdown('Choose model', [], [brandDropdown, null], 'disabled');
-const filterButton = document.createElement('button');
-filterButton.className = 'component-search disabled';
-filterButton.innerText = 'Choose';
-filters.append(filterButton);
-filterButton.addEventListener('click', function() {
-  if (!this.classList.contains('disabled')) {
-    console.log(brandDropdown.value, modelDropdown.value);
-    console.log(brandDropdown, modelDropdown);
-  }
-});
-modelDropdown._slave = {
-  name: 'button',
-  element: filterButton,
-};
+    const modelDropdown = new Dropdown('Choose model', [], [brandDropdown, null], 'disabled');
+    const filterButton = document.createElement('button');
+    filterButton.className = 'component-search disabled';
+    filterButton.innerText = 'Choose';
+    filters.append(filterButton);
+    filterButton.addEventListener('click', function () {
+      if (!this.classList.contains('disabled')) {
+        console.log(brandDropdown.value, modelDropdown.value);
+        console.log(brandDropdown, modelDropdown);
+      }
+    });
+    modelDropdown._slave = {
+      name: 'button',
+      element: filterButton,
+    };
+  })
