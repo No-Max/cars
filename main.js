@@ -1,6 +1,7 @@
 class Dropdown {
   _selectedValue;
-  constructor(defaultValue, list, dependance = [null, null], initialState = false) {
+  constructor(defaultValue, list, name, dependance = [null, null], initialState = false) {
+    this.name = name;
     this.defaultValue = defaultValue;
     this.listItems = list;
     [this._master, this._slave] = dependance;
@@ -54,7 +55,12 @@ class Dropdown {
 
   clear() {
     this.element.querySelector('.component-dropdown-value').textContent = this.defaultValue;
-    const button = this.element.closest('.filters').querySelector('button').classList.add('disabled');
+    this._selectedValue = '';
+    let button = this._slave;
+    while (button.name !== 'button') {
+      button = button._slave;
+    }
+    button.element.classList.add('disabled');
   }
 
   populateList(values) {
@@ -69,6 +75,38 @@ class Dropdown {
   }
 }
 
+function Card({ brand, model, img, price, description }) {
+  const containerElement = document.createElement('div');
+  containerElement.classList.add('component-card');
+
+  const imgElement = document.createElement('img');
+  imgElement.classList.add('component-img');
+  imgElement.src = 'img/' + img;
+  containerElement.append(imgElement);
+
+  const brandElement = document.createElement('div');
+  brandElement.classList.add('component-brand');
+  brandElement.innerText = brand;
+  containerElement.append(brandElement);
+
+  const modelElement = document.createElement('div');
+  modelElement.classList.add('component-model');
+  modelElement.innerText = model;
+  containerElement.append(model);
+
+  const priceElement = document.createElement('div');
+  priceElement.classList.add('component-price');
+  priceElement.innerText = price;
+  containerElement.append(priceElement);
+
+  const descrElement = document.createElement('div');
+  descrElement.classList.add('component-descr');
+  descrElement.innerText = description;
+  containerElement.append(descrElement);
+
+  return containerElement;
+}
+
 fetch('server-responce.txt')
   .then(response => response.text())
   .then(data => { cars = JSON.parse(data); })
@@ -76,21 +114,31 @@ fetch('server-responce.txt')
     const filters = document.querySelector('.filters');
     const brandDropdown = new Dropdown('Choose brand', (() => {
       return Array.from(new Set(cars.map((e) => e.brand)));
-    })());
+    })(), 'brand');
 
-    const modelDropdown = new Dropdown('Choose model', [], [brandDropdown, null], true);
-    const filterButton = document.createElement('button');
-    filterButton.className = 'component-search disabled';
-    filterButton.innerText = 'Choose';
-    filters.append(filterButton);
-    filterButton.addEventListener('click', function () {
+    /*const*/ modelDropdown = new Dropdown('Choose model', [], 'model', [brandDropdown, null], true);
+    const filterButton = {
+      name: 'button',
+      element: document.createElement('button'),
+      _master: modelDropdown,
+    };
+    filterButton.element.className = 'component-search disabled';
+    filterButton.element.innerText = 'Choose';
+    filters.append(filterButton.element);
+    filterButton.element.addEventListener('click', function () {
       if (!this.classList.contains('disabled')) {
-        console.log(brandDropdown.value, modelDropdown.value);
-        console.log(brandDropdown, modelDropdown);
+        let top = filterButton;
+        let filteredCars = cars;
+        while (top._master !== null) {
+          top = top._master;
+          filteredCars = filteredCars.filter(e => e[top.name] === top.value);
+          
+        }
+        cardsContainer.innerHTML = '';
+        filteredCars.forEach(car => cardsContainer.append(new Card(car)));
       }
     });
-    modelDropdown._slave = {
-      name: 'button',
-      element: filterButton,
-    };
-  })
+    modelDropdown._slave =  filterButton;
+    const cardsContainer = document.querySelector('.cards-container');
+    cars.forEach(car => cardsContainer.append(new Card(car)));
+  });
