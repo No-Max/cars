@@ -58,69 +58,70 @@ const cars = [
 ];
 
 class Dropdown {
-  constructor(listName, list, listStatus = '', isLast = false) {
-    this.listName = listName;
+  _selectedValue;
+  constructor(defaultValue, list, dependance = [null, null], listStatus = '') {
+    this.defaultValue = defaultValue;
     this.listItems = list;
-    this.isLast = isLast;
-    this._selectedValue;
-    this.element = this.createList(list, listName, listStatus);
+    [ this._master, this._slave ] = dependance;
+    if (this._master !== null) {
+      this._master._slave = this;
+    }
+    this.element = this.createList(list, defaultValue, listStatus);
     this.element.addEventListener('click', () => {
       this.element.classList.toggle('active');
       if (event.target.matches('li')) {
         const value = event.target.textContent;
-        this.selectedValue = value;
-        this.element.nextElementSibling.classList.remove('disabled');
-        if (this.isLast) {
-          if (this.listName !== 'Choose model') {
-            this.element.nextElementSibling.classList.remove('disabled');
-          }
-          
+        this.setSelectedValue = value;
+        if (this._slave === null) {
+            filterButton.classList.remove('disabled');
         }
         else {
-          this.clear.call(this.element.nextElementSibling);
-          const listValues = cars.filter((e) => {
-            if (e.brand === value) return e;
-          }).map((e) => e.model);
-          this.populateList.call(this.element.nextElementSibling, listValues);
+          if (this._slave.name === 'button') {
+            this._slave.element.classList.remove('disabled');
+          }
+          else {
+            this._slave.element.classList.remove('disabled');
+            this._slave.clear();
+            this.populateList.call(this._slave.element, cars.filter((e) => {
+              if (e.brand === value) return e;
+            }).map((e) => e.model));
+          }
           
         }
        }
     });
   }
 
-  createList(values, listName, listStatus) {
+  createList(values, defaultValue, listStatus) {
     const div = document.createElement('div');
     const ul = document.createElement('ul');
     const divHeading = document.createElement('div');
     div.className = `component-dropdown-container ${listStatus}`;
     divHeading.className = `component-dropdown-value`;
-    divHeading.textContent = listName;
+    divHeading.textContent = defaultValue;
     div.append(divHeading);
-    values.forEach((e) => {
-      const li = document.createElement('li');
-      li.className = `component-dropdown-item`;
-      li.textContent = e;
-      ul.append(li);
-    });
     ul.className = `component-dropdown-list`;
     div.append(ul);
+    this.populateList.call(div, values);
     document.querySelector('.filters').append(div);
     return div;
   }
 
-  set selectedValue(value) {
+  set setSelectedValue(value) {
     this._selectedValue = value;
     this.element.querySelector('.component-dropdown-value').textContent = value;
   }
 
-  clear() {
-    console.log('Here');
-    this.querySelector('.component-dropdown-value').textContent = 'Choose model';
-    this.nextElementSibling.classList.add('disabled');
-
+  get value() {
+    return this._selectedValue;
   }
+  
+  clear() {
+    this.element.querySelector('.component-dropdown-value').textContent = this.defaultValue;
+    const button = this.element.closest('.filters').querySelector('button').classList.add('disabled');
+  }
+
   populateList(values) {
-    console.log('GOTCHA');
     const ul = this.querySelector('ul');
     ul.innerHTML = '';
     values.forEach((e) => {
@@ -136,8 +137,19 @@ const filters = document.querySelector('.filters');
 const brandDropdown = new Dropdown('Choose brand', (() => {
   return Array.from(new Set(cars.map((e) =>  e.brand)));
 })());
-const modelDropdown = new Dropdown('Choose model', [], 'disabled', true);
+
+const modelDropdown = new Dropdown('Choose model', [], [brandDropdown, null], 'disabled');
 const filterButton = document.createElement('button');
 filterButton.className = 'component-search disabled';
-filterButton.textContent = 'Choose';
+filterButton.innerText = 'Choose';
 filters.append(filterButton);
+filterButton.addEventListener('click', function() {
+  if (!this.classList.contains('disabled')) {
+    console.log(brandDropdown.value, modelDropdown.value);
+    console.log(brandDropdown, modelDropdown);
+  }
+});
+modelDropdown._slave = {
+  name: 'button',
+  element: filterButton,
+};
