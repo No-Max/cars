@@ -1,42 +1,38 @@
 class Dropdown {
   _selectedValue;
-  constructor(defaultValue, list, dependance = [null, null], listStatus = '') {
+  constructor(defaultValue, list, dependance = [null, null], initialState = false) {
     this.defaultValue = defaultValue;
     this.listItems = list;
     [this._master, this._slave] = dependance;
     if (this._master !== null) {
       this._master._slave = this;
     }
-    this.element = this.createList(list, defaultValue, listStatus);
+    this.element = this.createList(list, defaultValue, initialState);
     this.element.addEventListener('click', () => {
       this.element.classList.toggle('active');
       if (event.target.matches('li')) {
         const value = event.target.textContent;
         this.setSelectedValue = value;
-        if (this._slave === null) {
-          filterButton.classList.remove('disabled');
+        if (this._slave.name === 'button') {
+          this._slave.element.classList.remove('disabled');
         }
         else {
-          if (this._slave.name === 'button') {
-            this._slave.element.classList.remove('disabled');
-          }
-          else {
-            this._slave.element.classList.remove('disabled');
-            this._slave.clear();
-            this.populateList.call(this._slave.element, cars.filter((e) => {
-              if (e.brand === value) return e;
-            }).map((e) => e.model));
-          }
+          // TODO: expand to have more than 2 select fields
+          this._slave.element.classList.remove('disabled');
+          this._slave.clear();
+          this.populateList.call(this._slave.element, cars.filter((e) => {
+            if (e.brand === value) return e;
+          }).map((e) => e.model));
         }
       }
     });
   }
 
-  createList(values, defaultValue, listStatus) {
+  createList(values, defaultValue, initialState) {
     const div = document.createElement('div');
     const ul = document.createElement('ul');
     const divHeading = document.createElement('div');
-    div.className = `component-dropdown-container ${listStatus}`;
+    div.className = `component-dropdown-container ${initialState ? 'disabled' : ''}`;
     divHeading.className = `component-dropdown-value`;
     divHeading.textContent = defaultValue;
     div.append(divHeading);
@@ -82,7 +78,7 @@ fetch('server-responce.txt')
       return Array.from(new Set(cars.map((e) => e.brand)));
     })());
 
-    const modelDropdown = new Dropdown('Choose model', [], [brandDropdown, null], 'disabled');
+    const modelDropdown = new Dropdown('Choose model', [], [brandDropdown, null], true);
     const filterButton = document.createElement('button');
     filterButton.className = 'component-search disabled';
     filterButton.innerText = 'Choose';
