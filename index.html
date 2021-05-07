@@ -11,47 +11,55 @@
 
     <div class="wrapper">
       <div class="logo">купи.авто.бай</div>
-
-      <div class="filters">
-        <button class="component-search disabled">Показать</button>
+      <div class="menu">
+        <a id="pageHome" href="#home">Главная</a>
+        <a id="pageCar" href="#car">Авто</a>
       </div>
-
-      <div class="cards-container"></div>
-
-      <div class="component-page" style="display: none;">
-        <div class="component-page-img">
-          <img src="img/audi-a1-big.jpg">
+      <div id="router" class="router">
+        <div id="#home" class="router-page active">
+          <div class="filters">
+            <button class="component-search">Показать</button>
+          </div>
+          <div class="cards-container"></div>
         </div>
-        <div class="component-page-info">
-          <div class="component-page-title">Audi a1</div>
-          <div class="component-page-price">30000$</div>
-          <div class="component-page-descr">Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.</div>
-          <table class="component-page-table">
-            <tr>
-              <td>Максимальная скорость</td>
-              <td>260км/ч</td>
-            </tr>
-            <tr>
-              <td>Вес</td>
-              <td>1200кг</td>
-            </tr>
-            <tr>
-              <td>Привод</td>
-              <td>полный</td>
-            </tr>
-            <tr>
-              <td>Цвет</td>
-              <td>серый</td>
-            </tr>
-            <tr>
-              <td>Модельный год</td>
-              <td>2020</td>
-            </tr>
-          </table>
+
+        <div id="#car" class="router-page">
+          <div class="component-page">
+            <div class="component-page-img">
+              <img src="img/audi-a1-big.jpg">
+            </div>
+            <div class="component-page-info">
+              <div class="component-page-title">Audi a1</div>
+              <div class="component-page-price">30000$</div>
+              <div class="component-page-descr">Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.</div>
+              <table class="component-page-table">
+                <tr>
+                  <td>Максимальная скорость</td>
+                  <td>260км/ч</td>
+                </tr>
+                <tr>
+                  <td>Вес</td>
+                  <td>1200кг</td>
+                </tr>
+                <tr>
+                  <td>Привод</td>
+                  <td>полный</td>
+                </tr>
+                <tr>
+                  <td>Цвет</td>
+                  <td>серый</td>
+                </tr>
+                <tr>
+                  <td>Модельный год</td>
+                  <td>2020</td>
+                </tr>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <script src="main.js"></script>
+    <script type="module" src="main.js"></script>
   </body>
 </html>

@@ -1,123 +1,9 @@
-const cars = [
-  {
-    brand: 'Audi',
-    model: 'A1',
-    img: 'audi-a1.jpeg',
-    price: 30000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-  {
-    brand: 'Audi',
-    model: 'A8',
-    img: 'audi-a8.jpeg',
-    price: 40000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-  {
-    brand: 'Audi',
-    model: 'Q7',
-    img: 'audi-q7.jpeg',
-    price: 60000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-  {
-    brand: 'BMW',
-    model: 'e60',
-    img: 'bmw-e60.jpg',
-    price: 50000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-  {
-    brand: 'BMW',
-    model: 'x5',
-    img: 'bmw-x5.jpg',
-    price: 40000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-  {
-    brand: 'Skoda',
-    model: 'Fabia',
-    img: 'skoda-fabia.jpeg',
-    price: 40000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-  {
-    brand: 'Skoda',
-    model: 'Fabia',
-    img: 'skoda-fabia.jpeg',
-    price: 40000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-  {
-    brand: 'Skoda',
-    model: 'Octavia',
-    img: 'skoda-octavia.jpeg',
-    price: 30000,
-    description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
-  },
-];
+import { cars, brands } from './constants/cars.js';
+import Dropdown from './classes/Dropdown.js';
+import Card from './classes/Card.js';
+import Router from './classes/Router.js';
 
-const brands = Array.from(new Set(cars.map(car => car.brand)));
-
-class Dropdown {
-  _selectedValue = null
-
-  constructor(defaultValue, listItems, onSelectItem) {
-    this.defaultValue = defaultValue;
-    this._selectedValue = defaultValue;
-    this.listItems = listItems;
-    
-    this.element = document.createElement('div');
-    this.element.classList.add('component-dropdown-container');
-    
-    this.valueElement = document.createElement('div');
-    this.valueElement.classList.add('component-dropdown-value')
-    this.valueElement.innerText = this.defaultValue;
-    this.element.append(this.valueElement);
-    
-    this.listElement = document.createElement('ul');
-    this.listElement.classList.add('component-dropdown-list');
-    this.element.append(this.listElement);
-
-    this.listItems.forEach(value => {
-      const li = document.createElement('li');
-      li.innerText = value;
-      li.classList.add('component-dropdown-item');
-      this.listElement.append(li);
-    });
-
-    this.element.addEventListener('click', (event) => {
-      this.element.classList.toggle('active');
-      if (event.target.matches('.component-dropdown-value')) {
-        this.clearSelectedValue();
-        if(onSelectItem) onSelectItem();
-      }
-      if (event.target.matches('.component-dropdown-item')) {
-        this.selectedValue = event.target.innerText;
-        if(onSelectItem) onSelectItem(event.target.innerText);
-      };
-    })
-  }
-
-  set selectedValue(value) {
-    this.valueElement.innerText = value;
-    this._selectedValue = value;
-  }
-
-  clearSelectedValue() {
-    this.selectedValue = this.defaultValue;
-  }
-  
-  setItemsList(list) {
-    this.listElement.innerHTML = '';
-    list.forEach(value => {
-      const li = document.createElement('li');
-      li.innerText = value;
-      li.classList.add('component-dropdown-item');
-      this.listElement.append(li);
-    });
-  }
-}
+const router = new Router(document.getElementById('router'));
 
 const modelDropdown = new Dropdown('Выберите модель', []);
 
@@ -136,42 +22,21 @@ const brandDropdown = new Dropdown('Выберите марку', brands,
 document.querySelector('.filters').append(brandDropdown.element);
 document.querySelector('.filters').append(modelDropdown.element);
 
-
-function Card({ brand, model, img, price, description }) {
-  const containerElement = document.createElement('div');
-  containerElement.classList.add('component-card');
-  
-  const imgElement = document.createElement('img');
-  imgElement.classList.add('component-card-img');
-  imgElement.src = 'img/' + img;
-  containerElement.append(imgElement);
-
-  const brandElement = document.createElement('div');
-  brandElement.classList.add('component-card-brand');
-  brandElement.innerText = brand;
-  containerElement.append(brandElement);
-
-  const modelElement = document.createElement('div');
-  modelElement.classList.add('component-card-model');
-  modelElement.innerText = model;
-  containerElement.append(model);
-
-  const priceElement = document.createElement('div');
-  priceElement.classList.add('component-card-price');
-  priceElement.innerText = price;
-  containerElement.append(priceElement);
-  
-  const descrElement = document.createElement('div');
-  descrElement.classList.add('component-card-descr');
-  descrElement.innerText = description;
-  containerElement.append(descrElement);
-
-  return containerElement;
-}
-
 const cardsContainer = document.querySelector('.cards-container');
-cars.forEach(car => {
-  cardsContainer.append(
-    new Card(car)
-  );
-});
+Card.appendCards(cardsContainer, cars);
+
+document.querySelector('.component-search').onclick = () => {
+  cardsContainer.innerHTML = '';
+  const filteredCars = cars.filter((car) => {
+    const isBrand = !!brandDropdown.selectedValue;
+    const isModel = !!modelDropdown.selectedValue;
+    if (isBrand && isModel) {
+      return car.brand === brandDropdown.selectedValue && car.model === modelDropdown.selectedValue;
+    } else if (isBrand && !isModel) {
+      return car.brand === brandDropdown.selectedValue;
+    } else {
+      return true;
+    }
+  });
+  Card.appendCards(cardsContainer, filteredCars);
+}

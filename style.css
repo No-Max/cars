@@ -113,7 +113,7 @@
   width: calc(100% - 300px);
   padding: 5px;
 }
-.component-page-img img{
+.component-page-img img {
   width: 100%;
 }
 .component-page-info {
@@ -136,8 +136,16 @@
   width: 100%;
   padding-top: 20px;
 }
-.component-page-table td:last-child{
+.component-page-table td:last-child {
   text-align: right;
   font-size: 14px;
   font-weight: bold;
+}
+
+/* router */
+.router .router-page {
+  display: none;
+}
+.router .router-page.active {
+  display: block;
 }
