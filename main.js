@@ -142,27 +142,27 @@ function Card({ brand, model, img, price, description }) {
   containerElement.classList.add('component-card');
   
   const imgElement = document.createElement('img');
-  imgElement.classList.add('component-img');
+  imgElement.classList.add('component-card-img');
   imgElement.src = 'img/' + img;
   containerElement.append(imgElement);
 
   const brandElement = document.createElement('div');
-  brandElement.classList.add('component-brand');
+  brandElement.classList.add('component-card-brand');
   brandElement.innerText = brand;
   containerElement.append(brandElement);
 
   const modelElement = document.createElement('div');
-  modelElement.classList.add('component-model');
+  modelElement.classList.add('component-card-model');
   modelElement.innerText = model;
   containerElement.append(model);
 
   const priceElement = document.createElement('div');
-  priceElement.classList.add('component-price');
+  priceElement.classList.add('component-card-price');
   priceElement.innerText = price;
   containerElement.append(priceElement);
   
   const descrElement = document.createElement('div');
-  descrElement.classList.add('component-descr');
+  descrElement.classList.add('component-card-descr');
   descrElement.innerText = description;
   containerElement.append(descrElement);
 
