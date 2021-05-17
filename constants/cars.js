@@ -6,6 +6,10 @@ export const cars = [
     price: 30000,
     description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
     color: 'grey',
+    year: 2018,
+    topSpeed: 193,
+    weight: 1140,
+    drive: 'front-wheel',
   },
   {
     brand: 'Audi',
@@ -14,6 +18,10 @@ export const cars = [
     price: 40000,
     description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
     color: 'black',
+    year: 2020,
+    topSpeed: 242,
+    weight: 1190,
+    drive: 'four-wheel',
   },
   {
     brand: 'Audi',
@@ -22,6 +30,10 @@ export const cars = [
     price: 60000,
     description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
     color: 'black',
+    year: 2020,
+    topSpeed: 216,
+    weight: 2445,
+    drive: 'four-wheel',
   },
   {
     brand: 'BMW',
@@ -30,6 +42,10 @@ export const cars = [
     price: 50000,
     description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
     color: 'black',
+    year: 2005,
+    topSpeed: 192,
+    weight: 1830,
+    drive: 'four-wheel',
   },
   {
     brand: 'BMW',
@@ -38,6 +54,10 @@ export const cars = [
     price: 40000,
     description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
     color: 'white',
+    year: 2018,
+    topSpeed: 250,
+    weight: 2250,
+    drive: 'four-wheel',
   },
   {
     brand: 'Mitsubishi',
@@ -46,7 +66,10 @@ export const cars = [
     price: 35000,
     description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
     color: 'white',
-    year: 2000,
+    year: 2003,
+    topSpeed: 197,
+    weight: 2165,
+    drive: 'rear-wheel',
   },
   {
     brand: 'Mitsubishi',
@@ -56,6 +79,9 @@ export const cars = [
     description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
     color: 'white',
     year: 2015,
+    topSpeed: 197,
+    weight: 2165,
+    drive: 'rear-wheel',
   },
   {
     brand: 'Skoda',
@@ -65,6 +91,9 @@ export const cars = [
     description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
     color: 'green',
     year: 2005,
+    topSpeed: 197,
+    weight: 2165,
+    drive: 'rear-wheel',
   },
   {
     brand: 'Skoda',
@@ -74,6 +103,9 @@ export const cars = [
     description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
     color: 'red',
     year: 2015,
+    topSpeed: 197,
+    weight: 2165,
+    drive: 'rear-wheel',
   },
   {
     brand: 'Volvo',
@@ -83,6 +115,9 @@ export const cars = [
     description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
     color: 'red',
     year: 2017,
+    topSpeed: 197,
+    weight: 2165,
+    drive: 'rear-wheel',
   },
   {
     brand: 'Volvo',
@@ -92,6 +127,9 @@ export const cars = [
     description: 'Достойный авто по доступной цене. Приятный разгон и хорошая шумоизоляция.',
     color: 'black',
     year: 2020,
+    topSpeed: 197,
+    weight: 2165,
+    drive: 'rear-wheel',
   },
 ];
 

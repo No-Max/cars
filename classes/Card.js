@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({ brand, model, img, price, description, color, year}) {
+  constructor({ brand, model, img, price, description, color, year, topSpeed, weight, drive}) {
     const containerElement = document.createElement('div');
     containerElement.classList.add('component-card');
 
@@ -28,15 +28,15 @@ export default class Card {
         <table class="component-page-table">
           <tr>
             <td>Максимальная скорость</td>
-            <td>${Math.trunc(Math.random() * 100 + 200)}км/ч</td>
+            <td>${topSpeed}км/ч</td>
           </tr>
           <tr>
             <td>Вес</td>
-            <td>${Math.trunc(Math.random() * 700 + 1000)}кг</td>
+            <td>${weight}кг</td>
           </tr>
           <tr>
             <td>Привод</td>
-            <td>полный</td>
+            <td>${drive}</td>
           </tr>
           <tr>
             <td>Цвет</td>
@@ -44,7 +44,7 @@ export default class Card {
           </tr>
           <tr>
             <td>Модельный год</td>
-            <td>${year ?? Math.trunc(Math.random() * 30 + 1990)}</td>
+            <td>${year}</td>
           </tr>
         </table>
         </div>
