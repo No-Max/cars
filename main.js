@@ -40,3 +40,10 @@ document.querySelector('.component-search').onclick = () => {
   });
   Card.appendCards(cardsContainer, filteredCars);
 }
+
+// fetch('https://cars-server.herokuapp.com/cars')
+//   .then((response) => {
+//     return response.json();
+//   }).then((data) => {
+//     console.log(data);
+//   })

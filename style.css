@@ -149,3 +149,21 @@
 .router .router-page.active {
   display: block;
 }
+
+/* loading */
+.loading .wrapper {
+  opacity: 0;
+}
+.loading::before {
+  display: block;
+  position: fixed;
+  top: calc(50% - 100px);
+  left: calc(50% - 100px);
+  content: " ";
+  z-index: 1;
+  background-image: url("/img/loading.gif");
+  background-position: center center;
+  background-size: 100%;
+  width: 200px;
+  height: 200px;
+}
