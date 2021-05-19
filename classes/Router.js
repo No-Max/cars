@@ -1,6 +1,6 @@
 export default class Router {
   pages = [];
-  constructor(container) {
+  constructor(container, homePage = "#home") {
     for (let page in container.children) {
       if (container.children[page].id) {
         this.pages.push({
@@ -9,14 +9,23 @@ export default class Router {
         });
       }
     }
+    this.homePage = homePage;
 
-    window.addEventListener('hashchange', (e) => {
-      this.goTo(location.hash);
-    })
+    const onHashCahnge = () => {
+      const pageId = location.hash || this.homePage;
+      const pageObj = this.pages.find((page) => page.id === pageId);
+      if (pageObj) {
+        this.pages.forEach((page) => page.element.classList.remove("active"));
+        pageObj.element.classList.add("active");
+      } else {
+        this.goTo(this.homePage);
+      }
+    };
+
+    onHashCahnge();
+    window.addEventListener("hashchange", onHashCahnge);
   }
   goTo(pageId) {
-    const pageObj = this.pages.find((page) => page.id === pageId);
-    this.pages.forEach((page) => page.element.classList.remove('active'));
-    pageObj.element.classList.add('active');
+    location.hash = pageId;
   }
 }
