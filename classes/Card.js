@@ -4,7 +4,7 @@ export default class Card {
     containerElement.classList.add('component-card');
 
     containerElement.innerHTML = `
-      <img class="component-card-img" src="img/${img}">
+      <div class="component-card-img" style="background-image: url('/img/${img}')"></div>
       <div class="component-card-brand">${brand}</div>
       <div class="component-card-model">${model}</div>
       <div class="component-card-price">${price}</div>
