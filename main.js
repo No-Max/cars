@@ -15,22 +15,47 @@ const routerContainer = document.getElementById("router"); // контейнер
 const router = new Router(routerContainer);
 
 // Фильтры
-const modelDropdown = new Dropdown("Выберите модель", []);
-const brandDropdown = new Dropdown("Выберите марку", brands, (brand) => {
-  modelDropdown.setItemsList([]);
-  modelDropdown.clearSelectedValue();
-  if (brand) {
+
+getBrand().then ((brands) => {
+  const modelDropdown = new Dropdown ("Выбрать модель", []);
+  const brandDropdown = new Dropdown ("Выбрать марку", brands, (brand) => {
+    modelDropdown.setItemsList ([]);
+    modelDropdown.clearSelectedValue ();
+      if (brand) {
+        getModel(brand).then ((models) =>{
+          modelDropdown.setItemsList (models);
+        })
+      };
+  })
+  filtersContainer.append(brandDropdown.element);
+  filtersContainer.append(modelDropdown.element);
+
+  searchButton.onclick = () => {
+    cardsContainer.innerHTML = "";
     getCars().then((cars) => {
-      let models = cars
-        .filter((car) => car.brand === brand)
-        .map((car) => car.model);
-      models = Array.from(new Set(models));
-      modelDropdown.setItemsList(models);
+      const filteredCars = cars.filter((car) => {
+        const isBrand = !!brandDropdown.selectedValue;
+        const isModel = !!modelDropdown.selectedValue;
+        if (isBrand && isModel) {
+          return (
+            car.brand === brandDropdown.selectedValue &&
+            car.model === modelDropdown.selectedValue
+          );
+        } else if (isBrand && !isModel) {
+          return car.brand === brandDropdown.selectedValue;
+        } else {
+          return true;
+        }
+      });
+      Card.appendCards(cardsContainer, filteredCars, (carId) => {
+        router.goTo("#car");
+        getCar(carId).then((car) => {
+          BigCard.appendCard(bigCardContainer, car);
+        });
+      });
     });
-  }
+  };
 });
-filtersContainer.append(brandDropdown.element);
-filtersContainer.append(modelDropdown.element);
 
 getCars().then((cars) => {
   Card.appendCards(cardsContainer, cars, (carId) => {
@@ -41,31 +66,7 @@ getCars().then((cars) => {
   });
 });
 
-searchButton.onclick = () => {
-  cardsContainer.innerHTML = "";
-  getCars().then((cars) => {
-    const filteredCars = cars.filter((car) => {
-      const isBrand = !!brandDropdown.selectedValue;
-      const isModel = !!modelDropdown.selectedValue;
-      if (isBrand && isModel) {
-        return (
-          car.brand === brandDropdown.selectedValue &&
-          car.model === modelDropdown.selectedValue
-        );
-      } else if (isBrand && !isModel) {
-        return car.brand === brandDropdown.selectedValue;
-      } else {
-        return true;
-      }
-    });
-    Card.appendCards(cardsContainer, filteredCars, (carId) => {
-      router.goTo("#car");
-      getCar(carId).then((car) => {
-        BigCard.appendCard(bigCardContainer, car);
-      });
-    });
-  });
-};
+
 
 // Запросы к серверу
 function getCars() {
@@ -77,9 +78,21 @@ function getCars() {
 
 function getCar(id) {
   // Получить авто по id
-  return fetch(`https://cars-server.herokuapp.com/cars/${id}`).then(
-    (response) => {
+  return fetch(`https://cars-server.herokuapp.com/cars/${id}`).then((response) => {
+    return response.json();
+  });
+}
+
+function getBrand() {
+  // Получить бренд авто
+  return fetch (`https://cars-server.herokuapp.com/brands`).then ((response) => {
+    return response.json();
+  });
+}
+
+function getModel(brand) {
+  // Получить модель
+  return fetch(`https://cars-server.herokuapp.com/models/${brand}`).then((response) => {
       return response.json();
-    }
-  );
+  });
 }
