@@ -17,8 +17,6 @@ export default class Router {
       if (pageObj) {
         this.pages.forEach((page) => page.element.classList.remove("active"));
         pageObj.element.classList.add("active");
-      } else {
-        this.goTo(this.homePage);
       }
     };
 

@@ -171,3 +171,34 @@
   width: 200px;
   height: 200px;
 }
+
+/* about */
+.about {
+  padding: 5px;
+  padding-bottom: 500px;
+}
+
+.about section{
+  padding-top: 20px;
+}
+
+.about section p{
+  padding-top: 10px;
+  font-size: 18px;
+}
+
+.about section h2{
+  padding-top: 20px;
+  font-size: 24px;
+}
+
+.about menu {
+  width: 900px;
+  background-color: #fff;
+  padding: 5px;
+}
+
+.about menu.sticked {
+  position: fixed;
+  top: 0;
+}
