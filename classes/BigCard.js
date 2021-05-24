@@ -19,6 +19,7 @@ export default class BigCard {
   static appendCard(container, car) {
     container.innerHTML = "";
     container.append(new BigCard(car));
+    document.body.classList.remove('loading');
   }
 }
 

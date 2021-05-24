@@ -41,7 +41,7 @@ getCars().then((cars) => {
       BigCard.appendCard(bigCardContainer, car);
     });
   });
-});
+}).finally(() => document.body.classList.remove('loading'));
 
 searchButton.onclick = () => {
   cardsContainer.innerHTML = "";
@@ -66,12 +66,13 @@ searchButton.onclick = () => {
         BigCard.appendCard(bigCardContainer, car);
       });
     });
-  });
+  }).finally(() => document.body.classList.remove('loading'));
 };
 
 // Запросы к серверу
 function getCars() {
   // Получить все авто
+  document.body.classList.add('loading');
   return fetch("https://cars-server.herokuapp.com/cars").then((response) => {
     return response.json();
   });
