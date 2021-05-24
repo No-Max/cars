@@ -13,6 +13,7 @@ export default class Card {
     const buttonReadMore = document.createElement("button");
     buttonReadMore.innerText = "Подробнее";
     buttonReadMore.onclick = () => {
+      document.body.classList.add ('loading');
       onClick(id);
     };
     containerElement.append(buttonReadMore);

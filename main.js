@@ -67,7 +67,6 @@ getCars().then((cars) => {
 });
 
 
-
 // Запросы к серверу
 function getCars() {
   // Получить все авто
