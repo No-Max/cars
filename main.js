@@ -1,4 +1,3 @@
-import { brands } from "./constants/cars.js";
 import Dropdown from "./classes/Dropdown.js";
 import Card from "./classes/Card.js";
 import Router from "./classes/Router.js";
@@ -16,19 +15,22 @@ const router = new Router(routerContainer);
 
 // Фильтры
 const modelDropdown = new Dropdown("Выберите модель", []);
-const brandDropdown = new Dropdown("Выберите марку", brands, (brand) => {
+const brandDropdown = new Dropdown("Выберите марку", [], (brand) => {
   modelDropdown.setItemsList([]);
   modelDropdown.clearSelectedValue();
   if (brand) {
-    getCars().then((cars) => {
-      let models = cars
-        .filter((car) => car.brand === brand)
-        .map((car) => car.model);
-      models = Array.from(new Set(models));
+    getModels(brand).then((models) => {
       modelDropdown.setItemsList(models);
     });
   }
 });
+
+getBrands().then((brands) => {
+  brandDropdown.listItems = [];
+  brandDropdown.setItemsList(brands);
+  brands.forEach((elem) => { brandDropdown.listItems.push(elem) });
+});
+
 filtersContainer.append(brandDropdown.element);
 filtersContainer.append(modelDropdown.element);
 
@@ -71,6 +73,18 @@ searchButton.onclick = () => {
 function getCars() {
   // Получить все авто
   return fetch("https://cars-server.herokuapp.com/cars").then((response) => {
+    return response.json();
+  });
+}
+
+function getBrands() {
+  return fetch("https://cars-server.herokuapp.com/brands").then((response) => {
+    return response.json();
+  });
+}
+
+function getModels(brand) {
+  return fetch(`https://cars-server.herokuapp.com/models/${brand}`).then((response) => {
     return response.json();
   });
 }
