@@ -3,7 +3,7 @@ import Dropdown from "./classes/Dropdown.js";
 import Card from "./classes/Card.js";
 import Router from "./classes/Router.js";
 import BigCard from "./classes/BigCard.js";
-
+//hello
 // Селекторы контейнеров
 const cardsContainer = document.querySelector(".cards-container"); // контейнер для всех машинок
 const filtersContainer = document.querySelector(".filters"); // контейнер для фильтров
