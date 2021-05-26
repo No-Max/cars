@@ -1,8 +1,14 @@
-import { brands } from "./constants/cars.js";
+// Импорты классов
 import Dropdown from "./classes/Dropdown.js";
 import Card from "./classes/Card.js";
 import Router from "./classes/Router.js";
 import BigCard from "./classes/BigCard.js";
+import Preloader from "./classes/Preloader.js";
+
+// импорты сервисов
+import { getBrands } from "./services/brands.js";
+import { getCar, getCars } from "./services/cars.js";
+import { getModels } from "./services/models.js";
 
 // Селекторы контейнеров
 const cardsContainer = document.querySelector(".cards-container"); // контейнер для всех машинок
@@ -14,35 +20,42 @@ const routerContainer = document.getElementById("router"); // контейнер
 // Роутер
 const router = new Router(routerContainer);
 
-// Фильтры
-const modelDropdown = new Dropdown("Выберите модель", []);
-const brandDropdown = new Dropdown("Выберите марку", brands, (brand) => {
-  modelDropdown.setItemsList([]);
-  modelDropdown.clearSelectedValue();
-  if (brand) {
-    getCars().then((cars) => {
-      let models = cars
-        .filter((car) => car.brand === brand)
-        .map((car) => car.model);
-      models = Array.from(new Set(models));
-      modelDropdown.setItemsList(models);
-    });
-  }
-});
-filtersContainer.append(brandDropdown.element);
-filtersContainer.append(modelDropdown.element);
+// Прелоадер
+const preloader = new Preloader(document.querySelector(".router"), "loading");
 
-getCars().then((cars) => {
+// Фильтры
+const brandDropdown = new Dropdown("Выберите марку", [], filtersContainer);
+const modelDropdown = new Dropdown("Выберите модель", [], filtersContainer);
+
+// Получаем авто и бренды
+preloader.show();
+Promise.all([getBrands(), getCars()]).then(([brands, cars]) => {
+  brandDropdown.setItemsList(brands);
+  brandDropdown.onSelectItem = (brand) => {
+    modelDropdown.setItemsList([]);
+    modelDropdown.clearSelectedValue();
+    if (brand) {
+      getModels(brand).then((models) => {
+        modelDropdown.setItemsList(models);
+      });
+    }
+  };
+  preloader.hide();
+
   Card.appendCards(cardsContainer, cars, (carId) => {
+    preloader.show();
     router.goTo("#car");
     getCar(carId).then((car) => {
       BigCard.appendCard(bigCardContainer, car);
+      preloader.hide();
     });
   });
 });
 
+// Обработчик кнопки "Показать"
 searchButton.onclick = () => {
   cardsContainer.innerHTML = "";
+  preloader.show();
   getCars().then((cars) => {
     const filteredCars = cars.filter((car) => {
       const isBrand = !!brandDropdown.selectedValue;
@@ -58,28 +71,15 @@ searchButton.onclick = () => {
         return true;
       }
     });
+    preloader.hide();
+
     Card.appendCards(cardsContainer, filteredCars, (carId) => {
       router.goTo("#car");
+      preloader.show();
       getCar(carId).then((car) => {
         BigCard.appendCard(bigCardContainer, car);
+        preloader.hide();
       });
     });
   });
 };
-
-// Запросы к серверу
-function getCars() {
-  // Получить все авто
-  return fetch("https://cars-server.herokuapp.com/cars").then((response) => {
-    return response.json();
-  });
-}
-
-function getCar(id) {
-  // Получить авто по id
-  return fetch(`https://cars-server.herokuapp.com/cars/${id}`).then(
-    (response) => {
-      return response.json();
-    }
-  );
-}
