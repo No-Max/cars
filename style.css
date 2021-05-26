@@ -147,6 +147,9 @@
 }
 
 /* router */
+.router {
+  position: relative;
+}
 .router .router-page {
   display: none;
 }
@@ -155,21 +158,29 @@
 }
 
 /* loading */
-.loading .wrapper {
-  opacity: 0;
-}
 .loading::before {
   display: block;
-  position: fixed;
-  top: calc(50% - 100px);
+  position: absolute;
+  top: 100px;
   left: calc(50% - 100px);
   content: " ";
-  z-index: 1;
+  z-index: 2;
   background-image: url("/img/loading.gif");
   background-position: center center;
   background-size: 100%;
   width: 200px;
   height: 200px;
+}
+.loading::after {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: " ";
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 100%;
 }
 
 /* about */
@@ -178,16 +189,16 @@
   padding-bottom: 500px;
 }
 
-.about section{
+.about section {
   padding-top: 20px;
 }
 
-.about section p{
+.about section p {
   padding-top: 10px;
   font-size: 18px;
 }
 
-.about section h2{
+.about section h2 {
   padding-top: 20px;
   font-size: 24px;
 }
