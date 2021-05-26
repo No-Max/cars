@@ -2,7 +2,7 @@ export default class Dropdown {
   _selectedValue = null;
   onSelectItem = null;
 
-  constructor(defaultValue, listItems, onSelectItem) {
+  constructor(defaultValue, listItems, container, onSelectItem) {
     this.defaultValue = defaultValue;
     this._selectedValue = defaultValue;
     this.listItems = listItems;
@@ -38,6 +38,10 @@ export default class Dropdown {
         if (this.onSelectItem) this.onSelectItem(event.target.innerText);
       }
     });
+
+    if (container) {
+      container.append(this.element);
+    }
   }
 
   set selectedValue(value) {
