@@ -4,6 +4,7 @@ import Card from "./classes/Card.js";
 import Router from "./classes/Router.js";
 import BigCard from "./classes/BigCard.js";
 import Preloader from "./classes/Preloader.js";
+import { About } from './classes/About.js';
 
 // импорты сервисов
 import { getBrands } from "./services/brands.js";
@@ -83,3 +84,5 @@ searchButton.onclick = () => {
     });
   }).finally(() => document.body.classList.remove('loading'));
 };
+
+new About();
