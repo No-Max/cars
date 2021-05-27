@@ -83,3 +83,28 @@ searchButton.onclick = () => {
     });
   });
 };
+
+const menu = document.querySelector ('menu');
+
+function scrollSection(id) {
+  const section = document.getElementById(id);
+  section.scrollIntoView(top);
+};
+
+menu.addEventListener('click', (event) => {
+  const menuButtons = event.target.dataset.sectionId;
+  if (menuButtons) {
+    scrollSection (menuButtons);
+  };
+});
+
+window.onscroll = function () {
+  if (window.scrollY >= menu.offsetTop) {
+    menu.classList.add('sticked');
+  } else {
+    menu.classList.remove('sticked');
+  };
+};
+
+
+
