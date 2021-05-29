@@ -1,6 +1,10 @@
-export function getCars() {
+export function getCars({ brand, model }) {
   // Получить все авто
-  return fetch("https://cars-server.herokuapp.com/cars").then((response) => {
+  return fetch(
+    `https://cars-server.herokuapp.com/cars?brand=${brand || ""}&model=${
+      model || ""
+    }`
+  ).then((response) => {
     return response.json();
   });
 }
