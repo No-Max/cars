@@ -4,6 +4,7 @@ import Card from "./classes/Card.js";
 import Router from "./classes/Router.js";
 import BigCard from "./classes/BigCard.js";
 import Preloader from "./classes/Preloader.js";
+import PopUp from "./classes/PopUp.js";
 
 // импорты сервисов
 import { getBrands } from "./services/brands.js";
@@ -17,9 +18,6 @@ const bigCardContainer = document.querySelector(".big-card-container"); // ко�
 const searchButton = document.querySelector(".component-search"); // кнопка применения фильтров
 const routerContainer = document.getElementById("router"); // контейнер со страницами
 
-// Роутер
-const router = new Router(routerContainer);
-
 // Прелоадер
 const preloader = new Preloader(document.querySelector(".router"), "loading");
 
@@ -27,53 +25,69 @@ const preloader = new Preloader(document.querySelector(".router"), "loading");
 const brandDropdown = new Dropdown("Выберите марку", [], filtersContainer);
 const modelDropdown = new Dropdown("Выберите модель", [], filtersContainer);
 
-// Получаем авто и бренды
-preloader.show();
-Promise.all([getBrands(), getCars()]).then(([brands, cars]) => {
-  brandDropdown.setItemsList(brands);
-  brandDropdown.onSelectItem = (brand) => {
-    modelDropdown.setItemsList([]);
-    modelDropdown.clearSelectedValue();
-    if (brand) {
-      getModels(brand).then((models) => {
-        modelDropdown.setItemsList(models);
+// Роутер
+const router = new Router(routerContainer, (pageId, parameters) => {
+  switch (pageId) {
+    case "#car": {
+      if (parameters && parameters.carId) {
+        preloader.show();
+        getCar(parameters.carId).then((car) => {
+          BigCard.appendCard(bigCardContainer, car);
+          preloader.hide();
+        });
+      } else {
+        router.goHome();
+      }
+      break;
+    }
+    case "#home": {
+      // Получаем авто и бренды
+      preloader.show();
+
+      Promise.all([
+        getBrands(),
+        getCars({
+          brand: brandDropdown.selectedValue,
+          model: modelDropdown.selectedValue,
+        }),
+      ]).then(([brands, cars]) => {
+        brandDropdown.setItemsList(brands);
+        brandDropdown.onSelectItem = (brand) => {
+          modelDropdown.setItemsList([]);
+          modelDropdown.clearSelectedValue();
+          if (brand) {
+            getModels(brand).then((models) => {
+              modelDropdown.setItemsList(models);
+            });
+          }
+        };
+        preloader.hide();
+        poupup.pushMessage("Машинки успешно получены");
+
+        cardsContainer.innerHTML = "";
+        Card.appendCards(cardsContainer, cars, (carId) => {
+          router.goTo("#car", { carId });
+        });
       });
     }
-  };
-  preloader.hide();
-
-  Card.appendCards(cardsContainer, cars, (carId) => {
-    preloader.show();
-    router.goTo("#car");
-    getCar(carId).then((car) => {
-      BigCard.appendCard(bigCardContainer, car);
-      preloader.hide();
-    });
-  });
+  }
 });
+
+// Поупап
+const poupup = new PopUp(1000);
 
 // Обработчик кнопки "Показать"
 searchButton.onclick = () => {
   cardsContainer.innerHTML = "";
   preloader.show();
-  getCars().then((cars) => {
-    const filteredCars = cars.filter((car) => {
-      const isBrand = !!brandDropdown.selectedValue;
-      const isModel = !!modelDropdown.selectedValue;
-      if (isBrand && isModel) {
-        return (
-          car.brand === brandDropdown.selectedValue &&
-          car.model === modelDropdown.selectedValue
-        );
-      } else if (isBrand && !isModel) {
-        return car.brand === brandDropdown.selectedValue;
-      } else {
-        return true;
-      }
-    });
+  getCars({
+    brand: brandDropdown.selectedValue,
+    model: modelDropdown.selectedValue,
+  }).then((cars) => {
     preloader.hide();
+    poupup.pushMessage("Машинки успешно получены");
 
-    Card.appendCards(cardsContainer, filteredCars, (carId) => {
+    Card.appendCards(cardsContainer, cars, (carId) => {
       router.goTo("#car");
       preloader.show();
       getCar(carId).then((car) => {
