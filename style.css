@@ -231,3 +231,28 @@
   right: 0;
   opacity: 1;
 }
+
+/* create-car */
+.create-car {
+  padding: 20px 5px;
+}
+
+.create-car form {
+  margin: 0 auto;
+  display: block;
+  width: 400px;
+}
+
+.create-car form input,
+.create-car form select,
+.create-car form textarea,
+.create-car form label {
+  display: block;
+  width: 100%;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
+
+.create-car form button {
+  padding: 5px 10px;
+}
