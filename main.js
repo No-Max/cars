@@ -6,6 +6,7 @@ import BigCard from "./classes/BigCard.js";
 import Preloader from "./classes/Preloader.js";
 import PopUp from "./classes/PopUp.js";
 import About from "./classes/About.js";
+import BurgerMenu from "./classes/BurgerMenu.js";
 
 // импорты сервисов
 import { getBrands } from "./services/brands.js";
@@ -22,8 +23,11 @@ const routerContainer = document.getElementById("router"); // контейнер
 // Прелоадер
 const preloader = new Preloader(document.querySelector(".router"), "loading");
 
+// Бургер-меню
+const burgerMenu = new BurgerMenu();
+
 // О нас 
-const about = new About ();
+const about = new About();
 
 // Фильтры
 const brandDropdown = new Dropdown("Выберите марку", [], filtersContainer);
@@ -100,15 +104,4 @@ searchButton.onclick = () => {
       });
     });
   });
-};
-
-// burger
-const trigger = document.getElementById ("trigger");
-trigger.onclick = function() {
-  open()
-};
-
-const menu = document.getElementById ("menu");
-function open() {
-  menu.classList.toggle ("show");
-};
+}; 

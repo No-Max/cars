@@ -247,7 +247,7 @@
   list-style: none;
 }
 .menu li a {
-  text-decoration: none;
+  color: black;
 }
 .trigger {
   display: inline-block;
@@ -262,4 +262,4 @@
 }
 .show {
   left:75px;
-}
+ } 
