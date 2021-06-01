@@ -4,6 +4,11 @@ import Card from "./classes/Card.js";
 import Router from "./classes/Router.js";
 import BigCard from "./classes/BigCard.js";
 import Preloader from "./classes/Preloader.js";
+import { Menu } from './classes/Menu.js';
+
+
+// Events
+import { menuOpen, menuClose } from './classes/Events.js';
 
 // импорты сервисов
 import { getBrands } from "./services/brands.js";
@@ -26,6 +31,8 @@ const preloader = new Preloader(document.querySelector(".router"), "loading");
 // Фильтры
 const brandDropdown = new Dropdown("Выберите марку", [], filtersContainer);
 const modelDropdown = new Dropdown("Выберите модель", [], filtersContainer);
+
+const mainMenu = new Menu();
 
 // Получаем авто и бренды
 preloader.show();
