@@ -11,10 +11,19 @@
 
     <div class="wrapper">
       <div class="logo">купи.авто.бай</div>
-      <div class="menu">
-        <a href="#home">Главная</a>
-        <a href="#about">О нас</a>
+      <div class="menu-container">
+        <div class="menu__block menu__block_burger">
+          <button class="btn btn__burger btn_open">&#9776;</button>
+        </div>
+        <div class="menu__block menu__block_list">
+          <div class="menu">
+            <a href="#home">Главная</a>
+            <a href="#about">О нас</a>
+          </div>
+          <button class="btn btn__menu btn_close">&times;</button>
+        </div>
       </div>
+      
       <div id="router" class="router">
         <div id="#home" class="router-page active">
           <div class="filters">
