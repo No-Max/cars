@@ -5,6 +5,7 @@ import Router from "./classes/Router.js";
 import BigCard from "./classes/BigCard.js";
 import Preloader from "./classes/Preloader.js";
 import { Menu } from './classes/Menu.js';
+import { About } from './classes/About.js';
 
 
 // Events
@@ -33,6 +34,7 @@ const brandDropdown = new Dropdown("Выберите марку", [], filtersCon
 const modelDropdown = new Dropdown("Выберите модель", [], filtersContainer);
 
 const mainMenu = new Menu();
+const about = new About();
 
 // Получаем авто и бренды
 preloader.show();
