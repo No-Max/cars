@@ -233,6 +233,7 @@
   opacity: 1;
 }
 
+/* Main menu */
 .btn {
   border: 2px solid transparent;
   cursor: pointer;
@@ -250,7 +251,7 @@
 }
 
 .menu-container {
-  position: absolute;
+  position: fixed;
   width: 200px;
   height: fit-content;
   top: -90px;
@@ -325,5 +326,46 @@
   height: 20px;
   border-radius: 50%;
   margin-top: 10px;
+}
 
+/* about */
+.about {
+  padding: 5px;
+  padding-bottom: 500px;
+}
+
+.about section {
+  padding-top: 20px;
+  position: relative;
+}
+
+.about section p {
+  padding-top: 10px;
+  font-size: 18px;
+}
+
+.about section h2 {
+  padding-top: 20px;
+  font-size: 24px;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+}
+
+.about menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 500px;
+  background-color: #fff;
+  padding: 5px;
+}
+
+.about menu.sticked {
+  position: fixed;
+  flex-direction: column;
+  width: 150px;
+  height: 130px;
+  top: 90px;
+  right: 80px;
 }

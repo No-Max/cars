@@ -2,9 +2,9 @@ export class About {
   constructor() {
     this.about = document.querySelector('.about');
     this.menu = this.about.querySelector('menu');
-    this.menuButtons = Object.values(menu.querySelectorAll('button'));
+    this.menuButtons = Object.values(this.menu.querySelectorAll('button'));
     this.aboutHeaders = Object
-      .values(about.querySelectorAll('section'))
+      .values(this.about.querySelectorAll('section'))
       .map((e) => e.querySelector('h2'));
 
     this.menu.addEventListener('click', (event) => {
