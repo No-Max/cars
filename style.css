@@ -1,233 +1,347 @@
 /* reset */
+
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
 }
 
+
 /* page */
+
 .wrapper {
-  padding-top: 20px;
-  width: 900px;
-  margin: 0 auto;
+    padding-top: 20px;
+    width: 900px;
+    margin: 0 auto;
 }
+
 .logo {
-  padding: 5px;
-  text-transform: uppercase;
-  font-weight: bold;
+    padding: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
 }
+
 .filters {
-  padding-top: 20px;
-  display: flex;
+    padding-top: 20px;
+    display: flex;
 }
 
 .cards-container {
-  padding-top: 20px;
+    padding-top: 20px;
 }
 
+
 /* dropdown component */
+
 .component-dropdown-container {
-  position: relative;
-  margin: 5px;
-  border: 2px solid #ccc;
-  text-align: center;
-  border-radius: 3px;
+    position: relative;
+    margin: 5px;
+    border: 2px solid #ccc;
+    text-align: center;
+    border-radius: 3px;
 }
 
 .component-dropdown-container.disabled .component-dropdown-value {
-  opacity: 0.5;
-  cursor: not-allowed;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .component-dropdown-value {
-  padding: 10px 20px;
-  cursor: pointer;
+    padding: 10px 20px;
+    cursor: pointer;
 }
+
 .component-dropdown-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: #fff;
-  display: none;
-  list-style: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    display: none;
+    list-style: none;
 }
+
 .component-dropdown-container.active .component-dropdown-list {
-  display: block;
+    display: block;
 }
+
 .component-dropdown-item {
-  padding: 5px;
-  cursor: pointer;
-  border-top: 1px solid #ccc;
+    padding: 5px;
+    cursor: pointer;
+    border-top: 1px solid #ccc;
 }
+
 .component-dropdown-item:hover {
-  background-color: #ccc;
+    background-color: #ccc;
 }
+
 
 /* card component */
+
 .component-card {
-  display: inline-block;
-  width: 33.3%;
-  padding: 20px 5px;
+    display: inline-block;
+    width: 33.3%;
+    padding: 20px 5px;
 }
+
 .component-card-img {
-  height: 170px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+    height: 170px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
+
 .component-card-brand {
-  font-size: 22px;
-  font-weight: bold;
-  padding-top: 10px;
+    font-size: 22px;
+    font-weight: bold;
+    padding-top: 10px;
 }
+
 .component-card-model {
-  font-size: 19px;
+    font-size: 19px;
 }
+
 .component-card-price {
-  font-weight: bold;
-  padding-top: 5px;
+    font-weight: bold;
+    padding-top: 5px;
 }
+
 .component-card-descr {
-  padding-top: 10px;
-  font-size: 16px;
+    padding-top: 10px;
+    font-size: 16px;
 }
+
 
 /* search button component */
+
 .component-search {
-  padding: 10px 20px;
-  border: 2px solid #ccc;
-  margin: 5px;
-  border-radius: 3px;
-  cursor: pointer;
+    padding: 10px 20px;
+    border: 2px solid #ccc;
+    margin: 5px;
+    border-radius: 3px;
+    cursor: pointer;
 }
+
 .component-search.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
+
 
 /* component page */
+
 .component-page {
-  width: 100%;
-  display: flex;
+    width: 100%;
+    display: flex;
 }
+
 .component-page-img {
-  width: calc(100% - 300px);
-  padding: 5px;
+    width: calc(100% - 300px);
+    padding: 5px;
 }
+
 .component-page-img img {
-  width: 100%;
+    width: 100%;
 }
+
 .component-page-info {
-  width: 300px;
-  padding: 5px;
+    width: 300px;
+    padding: 5px;
 }
+
 .component-page-title {
-  font-size: 22px;
-  font-weight: bold;
+    font-size: 22px;
+    font-weight: bold;
 }
+
 .component-page-price {
-  font-weight: bold;
-  padding-top: 5px;
+    font-weight: bold;
+    padding-top: 5px;
 }
+
 .component-page-descr {
-  padding-top: 10px;
-  font-size: 16px;
+    padding-top: 10px;
+    font-size: 16px;
 }
+
 .component-page-table {
-  width: 100%;
-  padding-top: 20px;
+    width: 100%;
+    padding-top: 20px;
 }
+
 .component-page-table td:last-child {
-  text-align: right;
-  font-size: 14px;
-  font-weight: bold;
+    text-align: right;
+    font-size: 14px;
+    font-weight: bold;
 }
+
 
 /* router */
+
 .router {
-  position: relative;
+    position: relative;
 }
+
 .router .router-page {
-  display: none;
+    display: none;
 }
+
 .router .router-page.active {
-  display: block;
+    display: block;
 }
+
 
 /* loading */
+
 .loading::before {
-  display: block;
-  position: absolute;
-  top: 100px;
-  left: calc(50% - 100px);
-  content: " ";
-  z-index: 2;
-  background-image: url("/img/loading.gif");
-  background-position: center center;
-  background-size: 100%;
-  width: 200px;
-  height: 200px;
-}
-.loading::after {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: " ";
-  z-index: 1;
-  background-color: rgba(255, 255, 255, 0.8);
-  width: 100%;
-  height: 100%;
+    display: block;
+    position: absolute;
+    top: 100px;
+    left: calc(50% - 100px);
+    content: " ";
+    z-index: 2;
+    background-image: url("/img/loading.gif");
+    background-position: center center;
+    background-size: 100%;
+    width: 200px;
+    height: 200px;
 }
 
+.loading::after {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: " ";
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 100%;
+    height: 100%;
+}
+
+
 /* about */
+
 .about {
-  padding: 5px;
-  padding-bottom: 500px;
+    padding: 5px;
+    padding-bottom: 500px;
+}
+
+.about button {
+    cursor: pointer;
 }
 
 .about section {
-  padding-top: 20px;
+    padding-top: 20px;
 }
 
 .about section p {
-  padding-top: 10px;
-  font-size: 18px;
+    padding-top: 10px;
+    font-size: 18px;
 }
 
 .about section h2 {
-  padding-top: 20px;
-  font-size: 24px;
+    padding-top: 20px;
+    font-size: 24px;
 }
 
 .about menu {
-  width: 900px;
-  background-color: #fff;
-  padding: 5px;
+    width: 900px;
+    background-color: #fff;
+    padding: 5px;
+    transition: 0.3s;
 }
 
-.about menu.sticked {
-  position: fixed;
-  top: 0;
+.about menu.fixed {
+    background: #222;
+    padding: 0.5rem;
 }
+
+.fixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 2rem;
+    background: #222;
+}
+
+.fixed button {
+    color: #fff;
+    background: #222;
+    border: none;
+}
+
+.fixed button:hover {
+    color: red;
+}
+
+.fixed button:after {
+    content: "";
+    border-right: 1px solid #fff;
+    margin: 0 1rem;
+}
+
 
 /* pop-up */
+
 .pop-up {
-  position: fixed;
-  top: 0;
-  background-color: green;
-  color: #fff;
-  padding: 10px 20px;
-  width: 200px;
-  right: -200px;
-  opacity: 0;
-  transition: 0.5s;
+    position: fixed;
+    top: 0;
+    background-color: green;
+    color: #fff;
+    padding: 10px 20px;
+    width: 200px;
+    right: -200px;
+    opacity: 0;
+    transition: 0.5s;
 }
 
 .pop-up.active {
-  right: 0;
-  opacity: 1;
+    right: 0;
+    opacity: 1;
+}
+
+.menu {
+    position: fixed;
+    left: -500px;
+    top: 0;
+    height: 100vh;
+    padding: 6rem 2rem;
+    background: #efefef;
+    transition: 0.3s;
+}
+
+.burger {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.close {
+    position: absolute;
+    top: 2%;
+    right: 5%;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.menu a {
+    color: #222;
+    font-weight: bolder;
+    display: block;
+    font-size: 1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-bottom: 1rem;
+}
+
+.menu a:hover {
+    color: blue;
 }
