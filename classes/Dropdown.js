@@ -35,7 +35,6 @@ export default class Dropdown {
         if (this.onSelectItem) this.onSelectItem();
       }
       if (event.target.matches(".component-dropdown-item")) {
-        console.log(this.listItems)
         this.selectedItem = this.listItems.find(item => item.id === Number(event.target.dataset.value));
         
         if (this.onSelectItem) this.onSelectItem(this.selectedItem);
@@ -48,7 +47,6 @@ export default class Dropdown {
   }
 
   set selectedItem(item) {
-    console.log(item)
     this.valueElement.innerText = item.name;
     this.valueElement.dataset.value = item.id;
     this._selectedItem = item;
@@ -67,6 +65,7 @@ export default class Dropdown {
   setItemsList(list) {
     this.listElement.innerHTML = "";
     this.listItems = list;
+    this.clearSelectedItem();
     list.forEach((item) => {
       const li = document.createElement("li");
       li.innerText = item.name;

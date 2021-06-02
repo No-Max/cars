@@ -68,6 +68,7 @@
 
 /* card component */
 .component-card {
+  vertical-align: top;
   display: inline-block;
   width: 33.3%;
   padding: 20px 5px;

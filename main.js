@@ -25,6 +25,9 @@ const preloader = new Preloader(document.querySelector(".router"), "loading");
 const brandDropdown = new Dropdown("Выберите марку", filtersContainer);
 const modelDropdown = new Dropdown("Выберите модель", filtersContainer);
 
+// Поупап
+const poupup = new PopUp(1000);
+
 // Роутер
 const router = new Router(routerContainer, (pageId, parameters) => {
   switch (pageId) {
@@ -32,7 +35,7 @@ const router = new Router(routerContainer, (pageId, parameters) => {
       if (parameters && parameters.carId) {
         preloader.show();
         getCar(parameters.carId).then((car) => {
-          BigCard.appendCard(bigCardContainer, car);
+          BigCard.appendCard(bigCardContainer, { ...car, brand: car.Brand.name, model: car.Model.name, parameters: car.Parameters });
           preloader.hide();
         });
       } else {
@@ -43,8 +46,6 @@ const router = new Router(routerContainer, (pageId, parameters) => {
     case "#home": {
       // Получаем авто и бренды
       preloader.show();
-
-      console.log(brandDropdown.selectedItem)
 
       Promise.all([
         getBrands(),
@@ -70,16 +71,13 @@ const router = new Router(routerContainer, (pageId, parameters) => {
         }
 
         cardsContainer.innerHTML = "";
-        Card.appendCards(cardsContainer, cars, (carId) => {
+        Card.appendCards(cardsContainer, cars.map(car => ({...car, brand: car.Brand.name, model: car.Model.name})), (carId) => {
           router.goTo("#car", { carId });
         });
       });
     }
   }
 });
-
-// Поупап
-const poupup = new PopUp(1000);
 
 // Обработчик кнопки "Показать"
 searchButton.onclick = () => {
@@ -96,11 +94,11 @@ searchButton.onclick = () => {
       poupup.pushMessage("Машинки не найдены");
     }
 
-    Card.appendCards(cardsContainer, cars, (carId) => {
+    Card.appendCards(cardsContainer, cars.map(car => ({...car, brand: car.Brand.name, model: car.Model.name})), (carId) => {
       router.goTo("#car");
       preloader.show();
       getCar(carId).then((car) => {
-        BigCard.appendCard(bigCardContainer, car);
+        BigCard.appendCard(bigCardContainer, { ...car, brand: car.Brand.name, model: car.Model.name, parameters: car.Parameters });
         preloader.hide();
       });
     });
