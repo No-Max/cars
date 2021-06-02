@@ -20,3 +20,9 @@ export function getCar(id) {
     }
   );
 }
+
+export function createCar(car) {
+  // создать авто
+  // сервис для создания машинки - нужнно дописать :D
+  return axios.post()
+}
