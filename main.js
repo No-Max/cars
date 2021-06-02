@@ -22,8 +22,8 @@ const routerContainer = document.getElementById("router"); // контейнер
 const preloader = new Preloader(document.querySelector(".router"), "loading");
 
 // Фильтры
-const brandDropdown = new Dropdown("Выберите марку", [], filtersContainer);
-const modelDropdown = new Dropdown("Выберите модель", [], filtersContainer);
+const brandDropdown = new Dropdown("Выберите марку", filtersContainer);
+const modelDropdown = new Dropdown("Выберите модель", filtersContainer);
 
 // Роутер
 const router = new Router(routerContainer, (pageId, parameters) => {
@@ -44,25 +44,30 @@ const router = new Router(routerContainer, (pageId, parameters) => {
       // Получаем авто и бренды
       preloader.show();
 
+      console.log(brandDropdown.selectedItem)
+
       Promise.all([
         getBrands(),
         getCars({
-          brand: brandDropdown.selectedValue,
-          model: modelDropdown.selectedValue,
+          BrandId: brandDropdown.selectedItem?.id,
+          ModelId: modelDropdown.selectedItem?.id,
         }),
       ]).then(([brands, cars]) => {
         brandDropdown.setItemsList(brands);
         brandDropdown.onSelectItem = (brand) => {
           modelDropdown.setItemsList([]);
-          modelDropdown.clearSelectedValue();
           if (brand) {
-            getModels(brand).then((models) => {
+            getModels(brand.id).then((models) => {
               modelDropdown.setItemsList(models);
             });
           }
         };
         preloader.hide();
-        poupup.pushMessage("Машинки успешно получены");
+        if(cars.length) {
+          poupup.pushMessage("Машинки успешно получены");
+        } else {
+          poupup.pushMessage("Машинки не найдены");
+        }
 
         cardsContainer.innerHTML = "";
         Card.appendCards(cardsContainer, cars, (carId) => {
@@ -81,11 +86,15 @@ searchButton.onclick = () => {
   cardsContainer.innerHTML = "";
   preloader.show();
   getCars({
-    brand: brandDropdown.selectedValue,
-    model: modelDropdown.selectedValue,
+    BrandId: brandDropdown.selectedItem?.id,
+    ModelId: modelDropdown.selectedItem?.id,
   }).then((cars) => {
     preloader.hide();
-    poupup.pushMessage("Машинки успешно получены");
+    if(cars.length) {
+      poupup.pushMessage("Машинки успешно получены");
+    } else {
+      poupup.pushMessage("Машинки не найдены");
+    }
 
     Card.appendCards(cardsContainer, cars, (carId) => {
       router.goTo("#car");

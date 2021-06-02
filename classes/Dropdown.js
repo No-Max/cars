@@ -1,11 +1,11 @@
 export default class Dropdown {
-  _selectedValue = null;
+  _selectedItem = null;
   onSelectItem = null;
 
-  constructor(defaultValue, listItems, container, onSelectItem) {
-    this.defaultValue = defaultValue;
-    this._selectedValue = defaultValue;
+  constructor(defaultText, container, listItems = [], onSelectItem) {
+    this.defaultItem = { id: null, name: defaultText };
     this.listItems = listItems;
+    this._selectedItem = this.defaultItem;
     this.onSelectItem = onSelectItem;
 
     this.element = document.createElement("div");
@@ -13,16 +13,17 @@ export default class Dropdown {
 
     this.valueElement = document.createElement("div");
     this.valueElement.classList.add("component-dropdown-value");
-    this.valueElement.innerText = this.defaultValue;
+    this.valueElement.innerText = this._selectedItem.name;
     this.element.append(this.valueElement);
 
     this.listElement = document.createElement("ul");
     this.listElement.classList.add("component-dropdown-list");
     this.element.append(this.listElement);
 
-    this.listItems.forEach((value) => {
+    this.listItems.forEach((item) => {
       const li = document.createElement("li");
-      li.innerText = value;
+      li.innerText = item.name;
+      li.dataset.value = item.id;
       li.classList.add("component-dropdown-item");
       this.listElement.append(li);
     });
@@ -30,12 +31,14 @@ export default class Dropdown {
     this.element.addEventListener("click", (event) => {
       this.element.classList.toggle("active");
       if (event.target.matches(".component-dropdown-value")) {
-        this.clearSelectedValue();
+        this.clearSelectedItem();
         if (this.onSelectItem) this.onSelectItem();
       }
       if (event.target.matches(".component-dropdown-item")) {
-        this.selectedValue = event.target.innerText;
-        if (this.onSelectItem) this.onSelectItem(event.target.innerText);
+        console.log(this.listItems)
+        this.selectedItem = this.listItems.find(item => item.id === Number(event.target.dataset.value));
+        
+        if (this.onSelectItem) this.onSelectItem(this.selectedItem);
       }
     });
 
@@ -44,26 +47,30 @@ export default class Dropdown {
     }
   }
 
-  set selectedValue(value) {
-    this.valueElement.innerText = value;
-    this._selectedValue = value;
+  set selectedItem(item) {
+    console.log(item)
+    this.valueElement.innerText = item.name;
+    this.valueElement.dataset.value = item.id;
+    this._selectedItem = item;
   }
 
-  get selectedValue() {
-    return this._selectedValue === this.defaultValue
+  get selectedItem() {
+    return this._selectedItem.id === this.defaultItem.id
       ? null
-      : this._selectedValue;
+      : this._selectedItem;
   }
 
-  clearSelectedValue() {
-    this.selectedValue = this.defaultValue;
+  clearSelectedItem() {
+    this.selectedItem = this.defaultItem;
   }
 
   setItemsList(list) {
     this.listElement.innerHTML = "";
-    list.forEach((value) => {
+    this.listItems = list;
+    list.forEach((item) => {
       const li = document.createElement("li");
-      li.innerText = value;
+      li.innerText = item.name;
+      li.dataset.value = item.id;
       li.classList.add("component-dropdown-item");
       this.listElement.append(li);
     });
