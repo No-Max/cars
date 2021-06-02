@@ -1,19 +1,22 @@
-export function getCars({ brand, model }) {
+export function getCars({ BrandId, ModelId }) {
   // Получить все авто
-  return fetch(
-    `https://cars-server.herokuapp.com/cars?brand=${brand || ""}&model=${
-      model || ""
-    }`
+  return axios(
+    `https://cars-server.herokuapp.com/cars`, {
+      params: {
+        BrandId,
+        ModelId,
+      },
+    }
   ).then((response) => {
-    return response.json();
+    return response.data;
   });
 }
 
 export function getCar(id) {
   // Получить авто по id
-  return fetch(`https://cars-server.herokuapp.com/cars/${id}`).then(
+  return axios(`https://cars-server.herokuapp.com/cars/${id}`).then(
     (response) => {
-      return response.json();
+      return response.data;
     }
   );
 }
