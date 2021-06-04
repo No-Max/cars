@@ -38,7 +38,7 @@ a:visited {
 .cards-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   width: 100%;
   padding-top: 20px;
 }
@@ -85,7 +85,7 @@ a:visited {
 /* card component */
 .component-card {
   /* display: inline-block; */
-  width: 30%;
+  width: 33.2%;
   padding: 20px 5px;
 }
 .component-card-img {
