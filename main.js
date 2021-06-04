@@ -5,6 +5,7 @@ import Router from "./classes/Router.js";
 import BigCard from "./classes/BigCard.js";
 import Preloader from "./classes/Preloader.js";
 import PopUp from "./classes/PopUp.js";
+import FormCreateCar from "./classes/FormCreateCar.js"
 
 // импорты сервисов
 import { getBrands } from "./services/brands.js";
@@ -17,6 +18,7 @@ const filtersContainer = document.querySelector(".filters"); // контейне
 const bigCardContainer = document.querySelector(".big-card-container"); // контейнер для страницы с машикой
 const searchButton = document.querySelector(".component-search"); // кнопка применения фильтров
 const routerContainer = document.getElementById("router"); // контейнер со страницами
+const formCreateCarContainer = document.forms.createCar;
 
 // Прелоадер
 const preloader = new Preloader(document.querySelector(".router"), "loading");
@@ -27,6 +29,21 @@ const modelDropdown = new Dropdown("Выберите модель", filtersConta
 
 // Поупап
 const poupup = new PopUp(1000);
+
+// Форма создать машинку
+const formCreateCar = new FormCreateCar(formCreateCarContainer);
+getBrands().then((brands) => {
+  formCreateCar.addBrands(brands);
+  getModels(document.forms.createCar.brand.value).then((models) => {
+    formCreateCar.addModels(models);
+  });
+  document.forms.createCar.brand.addEventListener('change', () => {
+    formCreateCar.clearModels();
+    getModels(document.forms.createCar.brand.value).then((models) => {
+      formCreateCar.addModels(models);
+    });
+  });
+});
 
 // Роутер
 const router = new Router(routerContainer, (pageId, parameters) => {
