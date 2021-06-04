@@ -4,7 +4,6 @@ export default class FormCreateCar {
 
   constructor(container) {
     this.container = container;
-    // this.brandsList = brandsList;
 
     this.inputs = `
     <input type="text" name="img" placeholder="Картинка для превью">
@@ -21,12 +20,6 @@ export default class FormCreateCar {
     this.brandSelect = document.createElement('select');
     this.brandSelect.setAttribute('name', 'brand');
     this.container.prepend(this.brandSelect);
-
-    // this._selectedBrandId = this.brandSelect.value;
-
-    // this.brandSelect.addEventListener('change', function() {
-    //   this._selectedBrandId = this.value;
-    // });
 
     this.button = document.createElement('button');
     this.button.setAttribute('type', 'submit');
