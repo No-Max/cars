@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Урок 1</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body class="">
+
+    <div class="wrapper">
+      <div class="logo">купи.авто.бай</div>
+      <div class="menu">
+        <a href="#home">Главная</a>
+        <a href="#about">О нас</a>
+        <a href="#create-car">Создать машинку</a>
+      </div>
+      <div id="router" class="router">
+        <div id="#home" class="router-page active">
+          <div class="filters">
+            <button class="component-search">Показать</button>
+          </div>
+          <div class="cards-container"></div>
+        </div>
+
+        <div id="#car" class="router-page">
+          <div class="big-card-container"></div>
+        </div>
+        <div id="#create-car" class="router-page">
+          <div class="create-car">
+            <h1>Создать машинку</h1>
+            <form method="POST" name="createCar">
+              <select name="brand">
+                <option value="1">BMW</option>
+                <option value="2">Audi</option>
+              </select>
+              <select name="model">
+                <option value="1">X5</option>
+                <option value="2">M3</option>
+              </select>
+              <input type="text" name="img" placeholder="Картинка для превью">
+              <input type="text" name="bigImg" placeholder="Большая картинка">
+              <input type="number" name="price" placeholder="Стоимость">
+              <textarea name="description" placeholder="Описание"></textarea>
+              <button type="submit">
+                Добавить
+              </button>
+            </form>
+          </div>
+        </div>
+        <div id="#about" class="router-page">
+          <div class="about">
+            <menu class="">
+              <button data-section-id="about-1">подзаголовок 1</button>
+              <button data-section-id="about-2">подзаголовок 2</button>
+              <button data-section-id="about-3">подзаголовок 3</button>
+              <button data-section-id="about-4">подзаголовок 4</button>
+            </menu>
+            <h1>О нас</h1>
+            <section id="about-1">
+              <h2>подзаголовок 1</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+            </section>
+            <section id="about-2">
+              <h2>подзаголовок 2</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+            </section>
+            <section id="about-3">
+              <h2>подзаголовок 3</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+            </section>
+            <section id="about-4">
+              <h2>подзаголовок 4</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Itaque, incidunt alias excepturi debitis aspernatur odit obcaecati velit sit!
+                Rerum praesentium dolor libero soluta hic nesciunt exercitationem quia, eius voluptatum quod?
+              </p>
+            </section>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
