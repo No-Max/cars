@@ -21,13 +21,7 @@ export class Database {
   }
 
   async populateBrands() {
-    const brands = await getBrands();
-    // this.brand.innerHTML = '';
-    // this.brand.options.add(new Option('Select brand', '0', true, true));
-    this.clearSelect.call(this.brand, 'brand');
-    brands.forEach(({ id, name }) => {
-      this.brand.options.add(new Option(name, id));
-    });
+    this.populateSelect.call(this.brand, getBrands, 'brand', this.clearSelect);
 
     this.brand.addEventListener('change', () => {
       if (!this.brand.selectedIndex) this.clearModel();
@@ -36,12 +30,18 @@ export class Database {
   }
 
   async populateModels(id) {
-    const models = await getModels(id);
-    this.clearSelect.call(this.model, 'model');
-    models.forEach(({ id, name }) => {
-      this.model.options.add(new Option(name, id));
-    });
+    this.populateSelect.call(this.model, getModels, 'model', this.clearSelect, id);
     this.model.disabled = false;
+  }
+
+  async populateSelect(getValues, selectName, clear, id) {
+    const disable = selectName === 'model' ? true : undefined;
+    const values = await getValues(id);
+    clear.call(this, selectName, disable);
+
+    values.forEach(({ id, name }) => {
+      this.options.add(new Option(name, id));
+    });
   }
 
   clearSelect(name, disable) {
