@@ -1,3 +1,5 @@
+import './style.css';
+
 export default class PopUp {
   constructor(delay = 1800, container = document.body) {
     this.element = document.createElement("div");

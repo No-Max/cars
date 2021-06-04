@@ -1,0 +1,10 @@
+/* router */
+.router {
+  position: relative;
+}
+.router .router-page {
+  display: none;
+}
+.router .router-page.active {
+  display: block;
+}

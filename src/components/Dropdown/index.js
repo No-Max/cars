@@ -1,9 +1,12 @@
+import './style.css'
+
 export default class Dropdown {
   _selectedItem = null;
   onSelectItem = null;
 
-  constructor(defaultText, container, listItems = [], onSelectItem) {
+  constructor(defaultText, container, filterId, listItems = [], onSelectItem) {
     this.defaultItem = { id: null, name: defaultText };
+    this.filterId = filterId;
     this.listItems = listItems;
     this._selectedItem = this.defaultItem;
     this.onSelectItem = onSelectItem;
@@ -37,6 +40,7 @@ export default class Dropdown {
       if (event.target.matches(".component-dropdown-item")) {
         this.selectedItem = this.listItems.find(item => item.id === Number(event.target.dataset.value));
         
+        window.localStorage.setItem(filterId, JSON.stringify(this.selectedItem));
         if (this.onSelectItem) this.onSelectItem(this.selectedItem);
       }
     });
@@ -73,5 +77,12 @@ export default class Dropdown {
       li.classList.add("component-dropdown-item");
       this.listElement.append(li);
     });
+    // if(this.onSelectItem) this.setDefaultItem();
   }
+
+  // setDefaultItem() {
+    // this.selectedItem = JSON.parse(window.localStorage.getItem(this.filterId));
+    // this.selectedItem = itemFromLocalStorage;
+    // this.onSelectItem(this.selectedItem);
+  // }
 }

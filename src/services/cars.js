@@ -26,5 +26,9 @@ export function getCar(id) {
 export function createCar(car) {
   // создать авто
   // сервис для создания машинки - нужнно дописать :D
-  return axios.post()
+  return axios.post('https://cars-server.herokuapp.com/cars', car)
+}
+
+export function deleteCar(id) {
+  return axios.delete(`https://cars-server.herokuapp.com/cars/${id}`)
 }

@@ -1,3 +1,5 @@
+import './style.css'
+
 export default class BigCard {
   constructor({ id, brand, model, bigImg, price, description, parameters }) {
     const container = document.createElement("div");
