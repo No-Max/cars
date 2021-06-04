@@ -7,14 +7,26 @@ export class Database {
   brand;
   model;
   result;
-  constructor(element) {
+  popup;
+  constructor(element, popup) {
     this.element = element;
+    this.popup = popup;
     this.button = this.element[this.element.length - 1];
     this.button.onclick = (event) => {
       event.preventDefault();
       if (this.validate()) {
-        !!this.query && upload(this.query);
-        console.log(this.query);
+        if (this.query) {
+          const result = upload(this.query);
+          new Promise((res) => {
+            const interval = setInterval(() => {
+              if (result) clearInterval(interval);
+            }, 50);
+            res();
+          }).then(() => this.popup.pushMessage('Машина загружена!'))
+          // await result;
+          // ;
+        }
+
         this.query = null;
         this.brand.selectedIndex = 0;
         this.clearSelect.call(this.model, 'model', true);

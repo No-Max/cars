@@ -116,4 +116,4 @@ searchButton.onclick = () => {
 };
 
 // Adding new cars hadler
-const db = new Database(window.createCar);
+const db = new Database(window.createCar, poupup);

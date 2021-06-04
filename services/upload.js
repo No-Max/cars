@@ -3,4 +3,6 @@ export function upload(value) {
   request.open('POST', 'https://cars-server.herokuapp.com/cars/', true);
   request.setRequestHeader('Content-Type', 'application/json');
   request.send(value);
+
+  return request.onload = () => true;
 }
