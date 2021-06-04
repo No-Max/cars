@@ -1,3 +1,6 @@
+// Импорты стилей
+import './style.css';
+
 // Импорты классов
 import Dropdown from "./classes/Dropdown.js";
 import Card from "./classes/Card.js";
