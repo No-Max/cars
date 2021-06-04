@@ -4,9 +4,10 @@ import Card from "./classes/Card.js";
 import Router from "./classes/Router.js";
 import BigCard from "./classes/BigCard.js";
 import Preloader from "./classes/Preloader.js";
+import PopUp from "./classes/PopUp.js";
 import { Menu } from './classes/Menu.js';
 import { About } from './classes/About.js';
-
+import { Database } from './classes/Database.js';
 
 // Events
 import { menuOpen, menuClose } from './classes/Events.js';
@@ -23,72 +24,96 @@ const bigCardContainer = document.querySelector(".big-card-container"); // ко�
 const searchButton = document.querySelector(".component-search"); // кнопка применения фильтров
 const routerContainer = document.getElementById("router"); // контейнер со страницами
 
-// Роутер
-const router = new Router(routerContainer);
-
 // Прелоадер
 const preloader = new Preloader(document.querySelector(".router"), "loading");
 
 // Фильтры
-const brandDropdown = new Dropdown("Выберите марку", [], filtersContainer);
-const modelDropdown = new Dropdown("Выберите модель", [], filtersContainer);
+const brandDropdown = new Dropdown("Выберите марку", filtersContainer);
+const modelDropdown = new Dropdown("Выберите модель", filtersContainer);
 
+// Menu & About Effects
 const mainMenu = new Menu();
 const about = new About();
 
-// Получаем авто и бренды
-preloader.show();
-Promise.all([getBrands(), getCars()]).then(([brands, cars]) => {
-  brandDropdown.setItemsList(brands);
-  brandDropdown.onSelectItem = (brand) => {
-    modelDropdown.setItemsList([]);
-    modelDropdown.clearSelectedValue();
-    if (brand) {
-      getModels(brand).then((models) => {
-        modelDropdown.setItemsList(models);
+// Поупап
+const poupup = new PopUp(1000);
+
+// Роутер
+const router = new Router(routerContainer, (pageId, parameters) => {
+  switch (pageId) {
+    case "#car": {
+      if (parameters && parameters.carId) {
+        preloader.show();
+        getCar(parameters.carId).then((car) => {
+          BigCard.appendCard(bigCardContainer, { ...car, brand: car.Brand.name, model: car.Model.name, parameters: car.Parameters });
+          preloader.hide();
+        });
+      } else {
+        router.goHome();
+      }
+      break;
+    }
+    case "#home": {
+      // Получаем авто и бренды
+      preloader.show();
+
+      Promise.all([
+        getBrands(),
+        getCars({
+          BrandId: brandDropdown.selectedItem?.id,
+          ModelId: modelDropdown.selectedItem?.id,
+        }),
+      ]).then(([brands, cars]) => {
+        brandDropdown.setItemsList(brands);
+        brandDropdown.onSelectItem = (brand) => {
+          modelDropdown.setItemsList([]);
+          if (brand) {
+            getModels(brand.id).then((models) => {
+              modelDropdown.setItemsList(models);
+            });
+          }
+        };
+        preloader.hide();
+        if(cars.length) {
+          poupup.pushMessage("Машинки успешно получены");
+        } else {
+          poupup.pushMessage("Машинки не найдены");
+        }
+
+        cardsContainer.innerHTML = "";
+        Card.appendCards(cardsContainer, cars.map(car => ({...car, brand: car.Brand.name, model: car.Model.name})), (carId) => {
+          router.goTo("#car", { carId });
+        });
       });
     }
-  };
-  preloader.hide();
-
-  Card.appendCards(cardsContainer, cars, (carId) => {
-    preloader.show();
-    router.goTo("#car");
-    getCar(carId).then((car) => {
-      BigCard.appendCard(bigCardContainer, car);
-      preloader.hide();
-    });
-  });
+  }
 });
 
 // Обработчик кнопки "Показать"
 searchButton.onclick = () => {
   cardsContainer.innerHTML = "";
   preloader.show();
-  getCars().then((cars) => {
-    const filteredCars = cars.filter((car) => {
-      const isBrand = !!brandDropdown.selectedValue;
-      const isModel = !!modelDropdown.selectedValue;
-      if (isBrand && isModel) {
-        return (
-          car.brand === brandDropdown.selectedValue &&
-          car.model === modelDropdown.selectedValue
-        );
-      } else if (isBrand && !isModel) {
-        return car.brand === brandDropdown.selectedValue;
-      } else {
-        return true;
-      }
-    });
+  getCars({
+    BrandId: brandDropdown.selectedItem?.id,
+    ModelId: modelDropdown.selectedItem?.id,
+  }).then((cars) => {
     preloader.hide();
+    if(cars.length) {
+      poupup.pushMessage("Машинки успешно получены");
+    } else {
+      poupup.pushMessage("Машинки не найдены");
+    }
 
-    Card.appendCards(cardsContainer, filteredCars, (carId) => {
+    Card.appendCards(cardsContainer, cars.map(car => ({...car, brand: car.Brand.name, model: car.Model.name})), (carId) => {
       router.goTo("#car");
       preloader.show();
       getCar(carId).then((car) => {
-        BigCard.appendCard(bigCardContainer, car);
+        BigCard.appendCard(bigCardContainer, { ...car, brand: car.Brand.name, model: car.Model.name, parameters: car.Parameters });
         preloader.hide();
       });
     });
   });
 };
+
+// Adding new cars hadler
+const db = new Database(window.createCar, getBrands, getModels);

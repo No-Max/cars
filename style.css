@@ -7,6 +7,18 @@
   font-size: 16px;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-shadow: 1px 1px 3px #000000ad;
+}
+
+a:visited {
+  color: inherit;
+}
+
 /* page */
 .wrapper {
   padding-top: 20px;
@@ -24,6 +36,10 @@
 }
 
 .cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
   padding-top: 20px;
 }
 
@@ -68,8 +84,8 @@
 
 /* card component */
 .component-card {
-  display: inline-block;
-  width: 33.3%;
+  /* display: inline-block; */
+  width: 30%;
   padding: 20px 5px;
 }
 .component-card-img {
@@ -231,6 +247,31 @@
 .pop-up.active {
   right: 0;
   opacity: 1;
+}
+
+/* create-car */
+.create-car {
+  padding: 20px 5px;
+}
+
+.create-car form {
+  margin: 0 auto;
+  display: block;
+  width: 400px;
+}
+
+.create-car form input,
+.create-car form select,
+.create-car form textarea,
+.create-car form label {
+  display: block;
+  width: 100%;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
+
+.create-car form button {
+  padding: 5px 10px;
 }
 
 /* Main menu */

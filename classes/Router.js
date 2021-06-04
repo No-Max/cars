@@ -1,6 +1,10 @@
 export default class Router {
   pages = [];
-  constructor(container, homePage = "#home") {
+
+  _parameters = null;
+
+  constructor(container, callback, homePage = "#home") {
+    this.callback = callback;
     for (let page in container.children) {
       if (container.children[page].id) {
         this.pages.push({
@@ -18,12 +22,20 @@ export default class Router {
         this.pages.forEach((page) => page.element.classList.remove("active"));
         pageObj.element.classList.add("active");
       }
+      this.callback(pageId, this._parameters);
     };
 
     onHashCahnge();
     window.addEventListener("hashchange", onHashCahnge);
   }
-  goTo(pageId) {
+
+  goTo(pageId, parameters) {
     location.hash = pageId;
+    this._parameters = parameters;
+  }
+
+  goHome() {
+    location.hash = this.homePage;
+    this._parameters = null;
   }
 }
