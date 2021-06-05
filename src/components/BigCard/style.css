@@ -1,0 +1,37 @@
+/* component page */
+.component-page {
+  width: 100%;
+  display: flex;
+}
+.component-page-img {
+  width: calc(100% - 300px);
+  padding: 5px;
+}
+.component-page-img img {
+  width: 100%;
+}
+.component-page-info {
+  width: 300px;
+  padding: 5px;
+}
+.component-page-title {
+  font-size: 22px;
+  font-weight: bold;
+}
+.component-page-price {
+  font-weight: bold;
+  padding-top: 5px;
+}
+.component-page-descr {
+  padding-top: 10px;
+  font-size: 16px;
+}
+.component-page-table {
+  width: 100%;
+  padding-top: 20px;
+}
+.component-page-table td:last-child {
+  text-align: right;
+  font-size: 14px;
+  font-weight: bold;
+}

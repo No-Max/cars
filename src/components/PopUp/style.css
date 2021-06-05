@@ -1,0 +1,17 @@
+/* pop-up */
+.pop-up {
+  position: fixed;
+  top: 0;
+  background-color: green;
+  color: #fff;
+  padding: 10px 20px;
+  width: 200px;
+  right: -200px;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.pop-up.active {
+  right: 0;
+  opacity: 1;
+}

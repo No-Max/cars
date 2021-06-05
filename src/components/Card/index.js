@@ -1,3 +1,5 @@
+import './style.css'
+
 export default class Card {
   constructor({ id, brand, model, img, price, description }, onClick) {
     const containerElement = document.createElement("div");

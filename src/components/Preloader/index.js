@@ -1,3 +1,5 @@
+import './style.css'
+
 export default class Preloader {
   state = false;
   constructor(containerElement, className) {

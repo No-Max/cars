@@ -1,0 +1,30 @@
+
+/* card component */
+.component-card {
+  vertical-align: top;
+  display: inline-block;
+  width: 33.3%;
+  padding: 20px 5px;
+}
+.component-card-img {
+  height: 170px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.component-card-brand {
+  font-size: 22px;
+  font-weight: bold;
+  padding-top: 10px;
+}
+.component-card-model {
+  font-size: 19px;
+}
+.component-card-price {
+  font-weight: bold;
+  padding-top: 5px;
+}
+.component-card-descr {
+  padding-top: 10px;
+  font-size: 16px;
+}

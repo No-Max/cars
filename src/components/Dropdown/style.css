@@ -1,0 +1,38 @@
+/* dropdown component */
+.component-dropdown-container {
+  position: relative;
+  margin: 5px;
+  border: 2px solid #ccc;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.component-dropdown-container.disabled .component-dropdown-value {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.component-dropdown-value {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.component-dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  display: none;
+  list-style: none;
+}
+.component-dropdown-container.active .component-dropdown-list {
+  display: block;
+}
+.component-dropdown-item {
+  padding: 5px;
+  cursor: pointer;
+  border-top: 1px solid #ccc;
+}
+.component-dropdown-item:hover {
+  background-color: #ccc;
+}
