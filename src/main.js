@@ -1,5 +1,5 @@
 // Импорты стилей
-import './style.css';
+import "./style.css";
 
 // Импорты классов
 import Dropdown from "./components/Dropdown";
@@ -8,7 +8,7 @@ import Router from "./components/Router";
 import BigCard from "./components/BigCard";
 import Preloader from "./components/Preloader";
 import PopUp from "./components/PopUp";
-import CarForm from "./components/CarForm"
+import CarForm from "./components/CarForm";
 
 // импорты сервисов
 import { getBrands } from "./services/brands.js";
@@ -27,8 +27,12 @@ const formCreateCarContainer = document.forms.createCar;
 const preloader = new Preloader(document.querySelector(".router"), "loading");
 
 // Фильтры
-const brandDropdown = new Dropdown("Выберите марку", filtersContainer, 'brand');
-const modelDropdown = new Dropdown("Выберите модель", filtersContainer, 'model');
+const brandDropdown = new Dropdown("Выберите марку", filtersContainer, "brand");
+const modelDropdown = new Dropdown(
+  "Выберите модель",
+  filtersContainer,
+  "model"
+);
 
 // Поупап
 const poupup = new PopUp(1000);
@@ -40,7 +44,12 @@ const router = new Router(routerContainer, (pageId, parameters) => {
       if (parameters && parameters.carId) {
         preloader.show();
         getCar(parameters.carId).then((car) => {
-          BigCard.appendCard(bigCardContainer, { ...car, brand: car.Brand.name, model: car.Model.name, parameters: car.Parameters });
+          BigCard.appendCard(bigCardContainer, {
+            ...car,
+            brand: car.Brand.name,
+            model: car.Model.name,
+            parameters: car.Parameters,
+          });
           preloader.hide();
         });
       } else {
@@ -76,12 +85,20 @@ const router = new Router(routerContainer, (pageId, parameters) => {
         }
 
         cardsContainer.innerHTML = "";
-        Card.appendCards(cardsContainer, cars.map(car => ({ ...car, brand: car.Brand.name, model: car.Model.name })), (carId) => {
-          router.goTo("#car", { carId });
-        });
+        Card.appendCards(
+          cardsContainer,
+          cars.map((car) => ({
+            ...car,
+            brand: car.Brand.name,
+            model: car.Model.name,
+          })),
+          (carId) => {
+            router.goTo("#car", { carId });
+          }
+        );
       });
     }
-    case '#create-car': {
+    case "#create-car": {
       // Форма создать машинку
       const formCreateCar = new CarForm(formCreateCarContainer);
       getBrands().then((brands) => {
@@ -91,26 +108,31 @@ const router = new Router(routerContainer, (pageId, parameters) => {
         });
       });
 
-      formCreateCarContainer.brand.addEventListener('change', () => {
+      formCreateCarContainer.brand.addEventListener("change", () => {
         formCreateCar.clearModels();
         getModels(formCreateCarContainer.brand.value).then((models) => {
           formCreateCar.addModels(models);
         });
-      })
+      });
 
-      formCreateCarContainer.addEventListener('submit', (e) => {
+      formCreateCarContainer.addEventListener("submit", (e) => {
         e.preventDefault();
         createCar({
           BrandId: Number(formCreateCarContainer.brand.value),
           ModelId: Number(formCreateCarContainer.model.value),
-          img: "audi-a1-1.jpeg",
-          bigImg: "audi-a1-1-big.jpeg",
-          price: 10000,
-          description: "Описание"
-        }).then(() => {
-          deleteCar(1).then(() => poupup.pushMessage('Машинка Удалена'))
+          img: formCreateCarContainer.img.value,
+          bigImg: formCreateCarContainer.bigImg.value,
+          price: Number(formCreateCarContainer.price.value),
+          description: formCreateCarContainer.description.value,
         })
-      })
+          .then(() => {
+            poupup.pushMessage("Машинка создана");
+            router.goTo("#home");
+          })
+          .catch(() => {
+            poupup.pushMessage("Ошибка при создании машинки");
+          });
+      });
     }
   }
 });
@@ -130,13 +152,26 @@ searchButton.onclick = () => {
       poupup.pushMessage("Машинки не найдены");
     }
 
-    Card.appendCards(cardsContainer, cars.map(car => ({ ...car, brand: car.Brand.name, model: car.Model.name })), (carId) => {
-      router.goTo("#car");
-      preloader.show();
-      getCar(carId).then((car) => {
-        BigCard.appendCard(bigCardContainer, { ...car, brand: car.Brand.name, model: car.Model.name, parameters: car.Parameters });
-        preloader.hide();
-      });
-    });
+    Card.appendCards(
+      cardsContainer,
+      cars.map((car) => ({
+        ...car,
+        brand: car.Brand.name,
+        model: car.Model.name,
+      })),
+      (carId) => {
+        router.goTo("#car");
+        preloader.show();
+        getCar(carId).then((car) => {
+          BigCard.appendCard(bigCardContainer, {
+            ...car,
+            brand: car.Brand.name,
+            model: car.Model.name,
+            parameters: car.Parameters,
+          });
+          preloader.hide();
+        });
+      }
+    );
   });
 };
