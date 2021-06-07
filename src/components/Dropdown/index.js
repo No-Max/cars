@@ -1,35 +1,22 @@
-import './style.css'
+import "./style.css";
 
 export default class Dropdown {
-  _selectedItem = null;
-  onSelectItem = null;
-
-  constructor(defaultText, container, filterId, listItems = [], onSelectItem) {
+  constructor(defaultText, container, filterId) {
     this.defaultItem = { id: null, name: defaultText };
     this.filterId = filterId;
-    this.listItems = listItems;
-    this._selectedItem = this.defaultItem;
-    this.onSelectItem = onSelectItem;
 
     this.element = document.createElement("div");
     this.element.classList.add("component-dropdown-container");
 
     this.valueElement = document.createElement("div");
     this.valueElement.classList.add("component-dropdown-value");
-    this.valueElement.innerText = this._selectedItem.name;
     this.element.append(this.valueElement);
 
     this.listElement = document.createElement("ul");
     this.listElement.classList.add("component-dropdown-list");
     this.element.append(this.listElement);
 
-    this.listItems.forEach((item) => {
-      const li = document.createElement("li");
-      li.innerText = item.name;
-      li.dataset.value = item.id;
-      li.classList.add("component-dropdown-item");
-      this.listElement.append(li);
-    });
+    this.setItemsList();
 
     this.element.addEventListener("click", (event) => {
       this.element.classList.toggle("active");
@@ -38,9 +25,11 @@ export default class Dropdown {
         if (this.onSelectItem) this.onSelectItem();
       }
       if (event.target.matches(".component-dropdown-item")) {
-        this.selectedItem = this.listItems.find(item => item.id === Number(event.target.dataset.value));
-        
-        window.localStorage.setItem(filterId, JSON.stringify(this.selectedItem));
+        this.selectedItem = this.listItems.find(
+          (item) => item.id === Number(event.target.dataset.value)
+        );
+
+        localStorage.setItem(filterId, JSON.stringify(this.selectedItem));
         if (this.onSelectItem) this.onSelectItem(this.selectedItem);
       }
     });
@@ -64,25 +53,25 @@ export default class Dropdown {
 
   clearSelectedItem() {
     this.selectedItem = this.defaultItem;
+    localStorage.removeItem(this.filterId);
   }
 
-  setItemsList(list) {
+  setItemsList(list = []) {
     this.listElement.innerHTML = "";
     this.listItems = list;
-    this.clearSelectedItem();
-    list.forEach((item) => {
+    this.listItems.forEach((item) => {
       const li = document.createElement("li");
       li.innerText = item.name;
       li.dataset.value = item.id;
       li.classList.add("component-dropdown-item");
       this.listElement.append(li);
     });
-    // if(this.onSelectItem) this.setDefaultItem();
+    this.selectedItem = list
+      ? getLocalStorageItem(this.filterId) || this.defaultItem
+      : this.defaultItem;
   }
+}
 
-  // setDefaultItem() {
-    // this.selectedItem = JSON.parse(window.localStorage.getItem(this.filterId));
-    // this.selectedItem = itemFromLocalStorage;
-    // this.onSelectItem(this.selectedItem);
-  // }
+function getLocalStorageItem(filterId) {
+  return JSON.parse(localStorage.getItem(filterId));
 }

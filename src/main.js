@@ -69,8 +69,14 @@ const router = new Router(routerContainer, (pageId, parameters) => {
         }),
       ]).then(([brands, cars]) => {
         brandDropdown.setItemsList(brands);
+        if (brandDropdown.selectedItem) {
+          getModels(brandDropdown.selectedItem.id).then((models) => {
+            modelDropdown.setItemsList(models);
+          });
+        }
         brandDropdown.onSelectItem = (brand) => {
           modelDropdown.setItemsList([]);
+          modelDropdown.clearSelectedItem();
           if (brand) {
             getModels(brand.id).then((models) => {
               modelDropdown.setItemsList(models);
